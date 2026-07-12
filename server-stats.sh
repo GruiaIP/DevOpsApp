@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "===== Server Performance Stats ====="
+echo "==== Server Performance Stats ===="
 echo
 
 echo "CPU Usage:"
