@@ -96,7 +96,7 @@ The following tasks were completed:
 
 ```
 
-Ex2\_StaticWebsite/
+\Ex2_StaticWebsite/
 
 │
 

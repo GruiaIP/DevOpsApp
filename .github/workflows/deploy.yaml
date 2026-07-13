@@ -1,0 +1,29 @@
+name: Deploy Static Website
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Display repository contents
+        run: ls -R
+
+      - name: Verify HTML file exists
+        run: |
+          if [ -f Ex2_StaticWebsite/index.html ]; then
+            echo "Website found."
+          else
+            echo "Website not found!"
+            exit 1
+          fi
+
+      - name: Deployment completed
+        run: echo "This is where deployment commands would run."
