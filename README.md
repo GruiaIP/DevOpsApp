@@ -6,4 +6,17 @@ Project URL:
 https://roadmap.sh/projects/server-stats
 
 Solution:
-- Ex1_ServerPerformanceStats/server-stats.sh
+
+* Ex1\_ServerPerformanceStats/server-stats.sh
+
+## Exercise 2 - Static Website
+
+Project URL:
+https://roadmap.sh/projects/ec2-instance
+
+Solution:
+
+* https://github.com/GruiaIP/DevOpsApp/blob/main/Ex2\_EC2Instance/index.html
+
+
+
