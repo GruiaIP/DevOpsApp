@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to My AWS Server</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #2563eb);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 50px;
+            width: 90%;
+            max-width: 700px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,.35);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            color: #93c5fd;
+            margin-bottom: 25px;
+            font-weight: normal;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .success {
+            display: inline-block;
+            background: #22c55e;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: bold;
+            margin: 25px 0;
+        }
+
+        .info {
+            background: rgba(255,255,255,.12);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .info ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .info li {
+            margin: 10px 0;
+        }
+
+        a {
+            color: #facc15;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            margin-top: 35px;
+            font-size: .9rem;
+            color: #cbd5e1;
+        }
+
+        .emoji {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="emoji">🚀</div>
+
+    <h1>Welcome to My AWS Server</h1>
+
+    <h2>Nginx is Running Successfully</h2>
+
+    <div class="success">
+        ✅ Deployment Successful
+    </div>
+
+    <p>
+        Congratulations! Your Ubuntu EC2 instance is running
+        <strong>Nginx</strong> and serving this website successfully.
+    </p>
+
+    <p>
+        This page is hosted on <strong>Amazon EC2</strong> using
+        <strong>Nginx</strong> as the web server.
+    </p>
+
+    <div class="info">
+
+        <h3>Project Details</h3>
+
+        <ul>
+            <li>☁️ Cloud Provider: Amazon Web Services (AWS)</li>
+            <li>🖥️ Operating System: Ubuntu</li>
+            <li>🌐 Web Server: Nginx</li>
+            <li>📄 Website: Static HTML</li>
+            <li>⚙️ Deployment: EC2 Instance</li>
+        </ul>
+
+    </div>
+
+    <footer>
+
+        Built as part of my DevOps learning journey ❤️
+
+        <br><br>
+
+        Learn more about
+        <a href="https://nginx.org" target="_blank">Nginx</a>
+        and
+        <a href="https://aws.amazon.com/ec2/" target="_blank">Amazon EC2</a>.
+
+    </footer>
+
+</div>
+
+</body>
+</html>
