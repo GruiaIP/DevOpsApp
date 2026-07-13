@@ -13,17 +13,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Display repository contents
-        run: ls -R
+      - name: Copy website to EC2
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "Ex2_StaticWebsite/index.html"
+          target: "/home/ubuntu"
 
-      - name: Verify HTML file exists
-        run: |
-          if [ -f Ex2_StaticWebsite/index.html ]; then
-            echo "Website found."
-          else
-            echo "Website not found!"
-            exit 1
-          fi
-
-      - name: Deployment completed
-        run: echo "This is where deployment commands would run."
+      - name: Deploy website
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            sudo cp /home/ubuntu/index.html /var/www/html/index.html
+            sudo systemctl reload nginx
