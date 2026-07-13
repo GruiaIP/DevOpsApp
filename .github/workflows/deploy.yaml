@@ -29,5 +29,5 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            sudo cp /home/ubuntu/index.html /var/www/html/index.html
+            sudo cp /home/ubuntu/Ex2_StaticWebsite/index.html /var/www/html/index.html
             sudo systemctl reload nginx
