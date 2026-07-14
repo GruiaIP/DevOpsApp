@@ -18,7 +18,7 @@ Solution:
 
 * https://github.com/GruiaIP/DevOpsApp/blob/main/Ex2\_EC2Instance/index.html
 
-## Exercise 2 - Static Website
+## Exercise 3 - Nginx Log Analyzer
 
 Project URL:
 https://roadmap.sh/projects/nginx-log-analyser
