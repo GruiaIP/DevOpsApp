@@ -3,11 +3,11 @@ const path = require("path");
 const redis = require("redis");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Create Redis client
 const redisClient = redis.createClient({
-    url: "redis://redis:6379"
+    url: process.env.REDIS_URL || "redis://redis:6379"
 });
 
 // Connect to Redis

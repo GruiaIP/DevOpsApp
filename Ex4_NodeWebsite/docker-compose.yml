@@ -7,10 +7,21 @@ services:
     ports:
       - "3000:3000"
 
+    environment:
+      PORT: 3000
+      REDIS_URL: redis://redis:6379
+
     depends_on:
       - redis
 
     restart: unless-stopped
+
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
 
   redis:
     image: redis:7-alpine
@@ -20,6 +31,12 @@ services:
 
     volumes:
       - redis-data:/data
+
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
 volumes:
   redis-data:
