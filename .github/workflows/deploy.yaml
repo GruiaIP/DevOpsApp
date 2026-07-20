@@ -9,22 +9,37 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    steps:
+    permissions:
+      contents: read
+      security-events: write
 
+    steps:
+      # 1. Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2. Build the Docker image
       - name: Build Docker image
-        run: docker build -t node-website ./Ex4_NodeWebsite
+        run: |
+          docker build -t node-website ./Ex4_NodeWebsite
 
-      - name: Scan image with Trivy
+      # 3. Scan the image with Trivy and generate a SARIF report
+      - name: Scan Docker image with Trivy
         uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: node-website
-          format: table
+          format: sarif
+          output: trivy-results.sarif
           severity: CRITICAL
           exit-code: 1
 
+      # 4. Upload the SARIF report to GitHub Security
+      - name: Upload Trivy scan results to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: trivy-results.sarif
+
+      # 5. Deploy to EC2
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v1.2.0
         with:
