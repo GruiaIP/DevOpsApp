@@ -14,39 +14,51 @@ jobs:
       security-events: write
 
     steps:
-      # Checkout the repository
+      # Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      # Login to Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       # Build Docker image
       - name: Build Docker image
         run: |
-          docker build -t node-website ./Ex4_NodeWebsite
+          docker build -t gip37/node-website:latest ./Ex4_NodeWebsite
 
-      # Generate SARIF report (never fails)
+      # Generate SARIF report
       - name: Generate Trivy SARIF report
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: node-website
+          image-ref: gip37/node-website:latest
           format: sarif
           output: trivy-results.sarif
           severity: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
           exit-code: 0
 
-      # Upload report to GitHub Security
+      # Upload SARIF report
       - name: Upload Trivy scan results
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: trivy-results.sarif
 
-      # Security gate - fail only on CRITICAL vulnerabilities
+      # Fail only on CRITICAL vulnerabilities
       - name: Fail on Critical vulnerabilities
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: node-website
+          image-ref: gip37/node-website:latest
           format: table
           severity: CRITICAL
           exit-code: 1
+
+      # Push image to Docker Hub
+      - name: Push Docker image
+        run: |
+          docker push gip37/node-website:latest
 
       # Deploy to EC2
       - name: Deploy to EC2

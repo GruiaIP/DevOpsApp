@@ -1,7 +1,7 @@
 services:
 
   app:
-    build: .
+    image: gip37/node-website:latest
     container_name: node-app
 
     ports:
