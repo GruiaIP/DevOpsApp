@@ -48,6 +48,15 @@ app.get("/health", (req, res) => {
     });
 });
 
+// Pod information
+app.get("/info", (req, res) => {
+    res.json({
+        hostname: process.env.HOSTNAME,
+        uptime: process.uptime(),
+        pid: process.pid
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
