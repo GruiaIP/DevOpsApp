@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 
 // Create Redis client
 const redisClient = redis.createClient({
-    url: process.env.REDIS_URL || "redis://redis:6379"
+    url: process.env.REDIS_URL || "redis://redis-service:6379"
 });
 
 // Connect to Redis

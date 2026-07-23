@@ -2,29 +2,24 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: node-app
+  name: redis
 
 spec:
-  replicas: 3
+  replicas: 1
 
   selector:
     matchLabels:
-      app: node-app
+      app: redis
 
   template:
-
     metadata:
       labels:
-        app: node-app
+        app: redis
 
     spec:
-
       containers:
-
-      - name: node-app
-
-        image: gip37/node-website:latest
+      - name: redis
+        image: redis:7-alpine
 
         ports:
-
-        - containerPort: 3000
+        - containerPort: 6379
