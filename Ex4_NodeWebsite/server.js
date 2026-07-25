@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 
 // Create Redis client
 const redisClient = redis.createClient({
-    url: process.env.REDIS_URL || "redis://redis-service:6379"
+    url: process.env.REDIS_URL
 });
 
 // Connect to Redis
@@ -51,9 +51,12 @@ app.get("/health", (req, res) => {
 // Pod information
 app.get("/info", (req, res) => {
     res.json({
-        hostname: process.env.HOSTNAME,
+        app: process.env.APP_NAME,
+        hostname: require("os").hostname(),
         uptime: process.uptime(),
-        pid: process.pid
+        pid: process.pid,
+        redis: process.env.REDIS_URL,
+        port: process.env.PORT
     });
 });
 

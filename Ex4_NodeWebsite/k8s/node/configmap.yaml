@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: node-config
+
+data:
+  PORT: "3000"
+  REDIS_URL: "redis://redis-service:6379"
+  APP_NAME: "Kubernetes Rocks!"

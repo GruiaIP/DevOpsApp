@@ -1,0 +1,87 @@
+body{
+
+    background:#0d1117;
+
+    color:white;
+
+}
+
+.yaml-container{
+
+    max-width:1000px;
+
+    margin:50px auto;
+
+    background:#1e1e1e;
+
+    border-radius:10px;
+
+    padding:35px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.4);
+
+}
+
+.yaml-container h2{
+
+    color:#4FC1FF;
+
+    margin-bottom:30px;
+
+    font-family:Segoe UI;
+
+}
+
+.yaml{
+
+    font-family:Consolas, Monaco, monospace;
+
+    font-size:17px;
+
+    line-height:1.8;
+
+    white-space:pre-wrap;
+
+}
+
+/* yaml keys */
+
+.key{
+
+    color:#4FC1FF;
+
+}
+
+/* docker kubernetes etc */
+
+.section{
+
+    color:#C586C0;
+
+    font-weight:bold;
+
+}
+
+/* strings */
+
+.string{
+
+    color:#CE9178;
+
+}
+
+/* booleans */
+
+.bool{
+
+    color:#569CD6;
+
+}
+
+/* numbers */
+
+.number{
+
+    color:#B5CEA8;
+
+}

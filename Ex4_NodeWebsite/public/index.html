@@ -1,178 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to My AWS Server !</title>
+<div class="yaml-container">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<h2>📄 devops-portfolio.yaml</h2>
 
-        body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f172a, #2563eb);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+<pre class="yaml">
 
-        .container {
-            background: rgba(255,255,255,0.08);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 50px;
-            width: 90%;
-            max-width: 700px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,.35);
-        }
+<span class="key">apiVersion</span>: <span class="string">portfolio.devops/v1</span>
 
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
+<span class="key">kind</span>: <span class="string">DevOpsProject</span>
 
-        h2 {
-            color: #93c5fd;
-            margin-bottom: 25px;
-            font-weight: normal;
-        }
+<span class="key">metadata</span>:
+  <span class="key">name</span>: <span class="string">node-website</span>
+  <span class="key">description</span>: <span class="string">Personal DevOps Portfolio</span>
 
-        p {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
+<span class="key">spec</span>:
 
-        .success {
-            display: inline-block;
-            background: #22c55e;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 50px;
-            font-weight: bold;
-            margin: 25px 0;
-        }
+  <span class="section">application</span>:
+    runtime: <span class="string">Node.js</span>
+    framework: <span class="string">Express</span>
+    database: <span class="string">Redis</span>
+    endpoint: <span class="string">/info</span>
+    visitorCounter: <span class="bool">Enabled</span>
 
-        .info {
-            background: rgba(255,255,255,.12);
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 30px;
-            text-align: left;
-        }
+  <span class="section">containerization</span>:
+    docker: <span class="bool">Enabled</span>
+    dockerCompose: <span class="bool">Enabled</span>
+    dockerHub: <span class="bool">Integrated</span>
+    multiContainer: <span class="bool">True</span>
 
-        .info ul {
-            margin-left: 20px;
-            margin-top: 10px;
-        }
+  <span class="section">orchestration</span>:
+    kubernetes: <span class="bool">Enabled</span>
+    deployment: <span class="bool">Created</span>
+    replicaSet: <span class="bool">Managed</span>
+    service: <span class="string">NodePort</span>
+    configMap: <span class="bool">Mounted</span>
+    replicas: <span class="number">3</span>
+    rollingUpdates: <span class="bool">Enabled</span>
 
-        .info li {
-            margin: 10px 0;
-        }
+  <span class="section">cloud</span>:
+    provider: <span class="string">AWS</span>
+    compute: <span class="string">EC2</span>
+    operatingSystem: <span class="string">Ubuntu</span>
+    reverseProxy: <span class="string">Nginx</span>
 
-        a {
-            color: #facc15;
-            text-decoration: none;
-            font-weight: bold;
-        }
+  <span class="section">development</span>:
+    git: <span class="bool">Enabled</span>
+    github: <span class="bool">Enabled</span>
 
-        a:hover {
-            text-decoration: underline;
-        }
+<span class="key">status</span>:
 
-        footer {
-            margin-top: 35px;
-            font-size: .9rem;
-            color: #cbd5e1;
-        }
+  environment: <span class="string" id="environment">Loading...</span>
 
-        .emoji {
-            font-size: 60px;
-            margin-bottom: 20px;
-        }
-    </style>
-</head>
+  hostname: <span class="string" id="hostname">Loading...</span>
 
-<body>
+  visitors: <span class="number" id="visitor-count">0</span>
 
-<div class="container">
+  redis: <span class="string" id="redis-status">Loading...</span>
 
-    <div class="emoji">🚀</div>
+  port: <span class="number" id="port">Loading...</span>
 
-    <h1>Welcome to My AWS Server</h1>
-
-    <h2> - Nginx is Running Successfully - </h2>
-
-    <div class="success">
-        ✅ Deployment Successful
-    </div>
-
-    <p>
-        Congratulations! Your Ubuntu EC2 instance is running
-        <strong>Nginx</strong> and serving this website successfully.
-    </p>
-
-    <p>
-        This page is hosted on <strong>Amazon EC2</strong> using
-        <strong>Nginx</strong> as the web server.
-    </p>
-
-<div class="info">
-
-    <h3>🚀 DevOps Project Summary</h3>
-
-    <ul>
-        <li>☁️ Deployed on Amazon Web Services (AWS EC2)</li>
-        <li>🖥️ Ubuntu Linux server</li>
-        <li>🌐 Nginx reverse proxy</li>
-        <li>📄 Node.js + Express web application</li>
-        <li>🐳 Containerized with Docker</li>
-        <li>📦 Multi-container application using Docker Compose</li>
-        <li>🔗 Docker bridge networking between services</li>
-        <li>💾 Redis integration for persistent visitor counter</li>
-        <li>🗄️ Docker Volume for Redis data persistence</li>
-        <li>❤️ Docker Health Checks for application and Redis</li>
-        <li>🔒 Trivy container image vulnerability scanning</li>
-        <li>🛡️ Security reports uploaded to GitHub Security</li>
-        <li>⚙️ CI/CD pipeline using GitHub Actions</li>
-        <li>📦 Docker image published to Docker Hub</li>
-        <li>🚀 Automated deployment to AWS EC2</li>
-        <li>🔄 Automatic image pull from Docker Hub during deployment</li>
-        <li>📈 Redis-powered visitor counter displayed below</li>
-    </ul>
-
-    <h3 style="margin-top:25px;">
-        👥 Visitor Count:
-        <span id="visitor-count">Loading...</span>
-    </h3>
+</pre>
 
 </div>
-
-<p style="margin-top:20px;">
-    🎯 This project demonstrates a complete DevOps workflow—from source code to automated cloud deployment using containers, CI/CD, security scanning, and Docker image distribution.
-</p>
-
-    <footer>
-
-        ❤️❤️❤️ Built as part of my DevOps learning journey ❤️❤️❤️
-
-        <br><br>
-
-        Learn more about
-        <a href="https://nginx.org" target="_blank">Nginx</a>
-        and
-        <a href="https://aws.amazon.com/ec2/" target="_blank">Amazon EC2</a>.
-
-    </footer>
-
-</div>
-<script src="/app.js"></script>
-</body>
-</html>
