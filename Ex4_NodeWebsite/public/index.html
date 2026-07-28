@@ -1,16 +1,152 @@
-<div class="yaml-container">
+<!DOCTYPE html>
+<html lang="en">
 
-<h2>📄 devops-portfolio.yaml</h2>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DevOps Portfolio</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- ========================= -->
+    <!-- HERO -->
+    <!-- ========================= -->
+
+    <header class="hero">
+
+        <h1>🚀 DevOps Portfolio</h1>
+
+        <p>
+            End-to-end DevOps project showcasing containerization, orchestration, CI/CD, security, and cloud deployment.
+        </p>
+		
+<p class="stack">
+
+    ⚙ Node.js
+
+    &nbsp;&nbsp;&nbsp;
+
+    🐳 Docker
+
+    &nbsp;&nbsp;&nbsp;
+
+    ☸ Kubernetes
+
+    &nbsp;&nbsp;&nbsp;
+
+    ☁ AWS EC2
+
+    &nbsp;&nbsp;&nbsp;
+
+    🔄 CI/CD
+
+    &nbsp;&nbsp;&nbsp;
+
+    🛡 Security
+
+</p>
+
+    </header>
+
+
+
+    <!-- ========================= -->
+    <!-- MAIN CONTENT -->
+    <!-- ========================= -->
+
+    <main class="dashboard">
+
+        <!-- ========================= -->
+        <!-- STATUS CARD -->
+        <!-- ========================= -->
+
+<section class="card overview-card">
+
+<h2>📋 Project Overview</h2>
+
+<div class="overview-item">
+
+<span>Application</span>
+
+<strong class="green">Running</strong>
+
+</div>
+
+<div class="overview-item">
+
+<span>Environment</span>
+
+<strong id="environment"></strong>
+
+</div>
+
+<div class="overview-item">
+
+<span>Hostname</span>
+
+<strong id="hostname"></strong>
+
+</div>
+
+<div class="overview-item">
+
+<span>Visitors</span>
+
+<strong id="visitor-count"></strong>
+
+</div>
+
+<div class="overview-item">
+
+<span>Redis</span>
+
+<strong id="redis-status"></strong>
+
+</div>
+
+<div class="overview-item">
+
+<span>Port</span>
+
+<strong id="port"></strong>
+
+</div>
+
+<p class="refresh">
+
+🔄 Auto refresh every 5 seconds
+
+</p>
+
+</section>
+
+
+
+        <!-- ========================= -->
+        <!-- YAML CARD -->
+        <!-- ========================= -->
+
+        <section class="card yaml-card">
+
+            <h2>📄 deployment-summary.yaml</h2>
 
 <pre class="yaml">
 
 <span class="key">apiVersion</span>: <span class="string">portfolio.devops/v1</span>
 
-<span class="key">kind</span>: <span class="string">DevOpsProject</span>
+<span class="key">kind</span>: <span class="string">DeploymentSummary</span>
 
 <span class="key">metadata</span>:
   <span class="key">name</span>: <span class="string">node-website</span>
-  <span class="key">description</span>: <span class="string">Personal DevOps Portfolio</span>
+  <span class="key">version</span>: <span class="string">1.0.0</span>
+  <span class="key">description</span>: <span class="string">Production-ready cloud-native DevOps portfolio</span>
 
 <span class="key">spec</span>:
 
@@ -18,46 +154,131 @@
     runtime: <span class="string">Node.js</span>
     framework: <span class="string">Express</span>
     database: <span class="string">Redis</span>
-    endpoint: <span class="string">/info</span>
-    visitorCounter: <span class="bool">Enabled</span>
+    api:
+      - <span class="string">/</span>
+      - <span class="string">/counter</span>
+      - <span class="string">/info</span>
 
   <span class="section">containerization</span>:
     docker: <span class="bool">Enabled</span>
     dockerCompose: <span class="bool">Enabled</span>
-    dockerHub: <span class="bool">Integrated</span>
-    multiContainer: <span class="bool">True</span>
+    registry: <span class="string">Docker Hub</span>
+    image: <span class="string">gip37/node-website:latest</span>
 
   <span class="section">orchestration</span>:
-    kubernetes: <span class="bool">Enabled</span>
-    deployment: <span class="bool">Created</span>
-    replicaSet: <span class="bool">Managed</span>
-    service: <span class="string">NodePort</span>
-    configMap: <span class="bool">Mounted</span>
+    platform: <span class="string">Kubernetes</span>
+    deployment: <span class="bool">Active</span>
     replicas: <span class="number">3</span>
-    rollingUpdates: <span class="bool">Enabled</span>
+    strategy: <span class="string">RollingUpdate</span>
+    service: <span class="string">NodePort</span>
+    configuration: <span class="string">ConfigMap</span>
 
-  <span class="section">cloud</span>:
-    provider: <span class="string">AWS</span>
-    compute: <span class="string">EC2</span>
+  <span class="section">infrastructure</span>:
+    cloud: <span class="string">AWS EC2</span>
     operatingSystem: <span class="string">Ubuntu</span>
     reverseProxy: <span class="string">Nginx</span>
 
-  <span class="section">development</span>:
-    git: <span class="bool">Enabled</span>
-    github: <span class="bool">Enabled</span>
+  <span class="section">ci/cd</span>:
+    sourceControl: <span class="string">GitHub</span>
+    automation: <span class="string">GitHub Actions</span>
+    imageBuild: <span class="bool">Automated</span>
+    imagePush: <span class="string">Docker Hub</span>
+    imageScanning: <span class="string">Trivy</span>
 
-<span class="key">status</span>:
+  <span class="section">security</span>:
+    containerUser: <span class="string">Non-root</span>
+    imageScanning: <span class="bool">Enabled</span>
+    vulnerabilityAssessment: <span class="bool">Passed</span>
+    dependencyManagement: <span class="string">npm</span>
 
-  environment: <span class="string" id="environment">Loading...</span>
+  <span class="section">roadmap</span>:
+    terraform: <span class="string">In Progress</span>
+    monitoring: <span class="string">Prometheus + Grafana</span>
 
-  hostname: <span class="string" id="hostname">Loading...</span>
-
-  visitors: <span class="number" id="visitor-count">0</span>
-
-  redis: <span class="string" id="redis-status">Loading...</span>
-
-  port: <span class="number" id="port">Loading...</span>
 
 </pre>
 
-</div>
+        </section>
+
+    </main>
+
+
+
+    <!-- ========================= -->
+    <!-- ROADMAP -->
+    <!-- ========================= -->
+
+<section class="roadmap card">
+
+    <h2>✔ Implemented Features</h2>
+
+    <div class="features-container">
+
+        <div class="features-column">
+
+            <ul>
+
+                <li>✔ Node.js Application</li>
+                <li>✔ Docker Containerization</li>
+                <li>✔ Docker Compose</li>
+                <li>✔ Docker Hub Registry</li>
+                <li>✔ Redis Integration</li>
+                <li>✔ Kubernetes Deployment</li>
+
+            </ul>
+
+        </div>
+
+        <div class="features-column">
+
+            <ul>
+
+                <li>✔ Deployment (3 Replicas)</li>
+                <li>✔ ReplicaSet Management</li>
+                <li>✔ Rolling Updates</li>
+                <li>✔ NodePort Service</li>
+                <li>✔ ConfigMap Mounted</li>
+                <li>✔ AWS EC2 (Ubuntu)</li>
+
+            </ul>
+
+        </div>
+
+        <div class="features-column">
+
+            <ul>
+
+                <li>✔ Nginx Reverse Proxy</li>
+                <li>✔ GitHub Repository</li>
+                <li>✔ GitHub Actions CI/CD</li>
+                <li>✔ Docker Image Build & Push</li>
+                <li>✔ Trivy Image Scanning</li>
+                <li>✔ Security Best Practices</li>
+
+            </ul>
+
+        </div>
+
+        <div class="progress-column">
+
+            <h3>🚧 In Progress</h3>
+
+            <ul>
+
+                <li>○ Terraform (Infrastructure as Code)</li>
+                <li>○ Prometheus Monitoring</li>
+                <li>○ Grafana Dashboards</li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+<script src="app.js"></script>
+
+</body>
+
+</html>

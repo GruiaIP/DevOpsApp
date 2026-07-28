@@ -1,58 +1,284 @@
+/* ===========================
+   GLOBAL
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
 body{
 
-    background:#0d1117;
+    background:#eef2f7;
+
+    margin:0;
+
+    font-family:Segoe UI, sans-serif;
+
+}
+
+/* ===========================
+   HERO
+=========================== */
+
+.hero{
+
+    width:92%;
+
+    max-width:1500px;
+
+    margin:25px auto 40px;
+
+    padding:50px 60px;
+
+    background:linear-gradient(135deg,#2d7fd3,#266dbc);
+
+    border-radius:20px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.20);
+
+    text-align:center;
+
+}
+
+.hero h1{
+
+    margin:0;
+
+    font-size:4rem;
+
+    font-weight:700;
+
+    color:#ffffff;
+
+}
+
+.hero p{
+
+    margin:20px auto 30px;
+
+    max-width:850px;
+
+    font-size:1.4rem;
+
+    line-height:1.6;
+
+    color:#e9f2ff;
+
+}
+
+.stack{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:28px;
+
+    margin-top:10px;
+
+    font-size:1.15rem;
+
+    color:#ffffff;
+
+}
+
+.stack span{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:8px;
+
+}
+
+/* ===========================
+   BADGES
+=========================== */
+
+.badges{
+
+    margin-top:35px;
+
+}
+
+.badge{
+
+    display:inline-block;
+
+    padding:8px 16px;
+
+    border-radius:20px;
+
+    margin:6px;
 
     color:white;
 
+    font-weight:bold;
+
+    transition:.25s;
+
+    cursor:default;
+
 }
 
-.yaml-container{
+.badge:hover{
 
-    max-width:1000px;
+    transform:translateY(-4px);
 
-    margin:50px auto;
+    box-shadow:0 6px 15px rgba(0,0,0,.2);
+
+}
+
+.node{background:#3fa037;}
+.docker{background:#2496ed;}
+.compose{background:#0b5fff;}
+.kubernetes{background:#326ce5;}
+.redis{background:#d82c20;}
+.aws{background:#ff9900;}
+.nginx{background:#009639;}
+.git{background:#f1502f;}
+.github{background:#24292e;}
+
+/* ===========================
+   DASHBOARD
+=========================== */
+
+.dashboard{
+
+    width:92%;
+
+    max-width:1500px;
+
+    margin:0 auto;
+
+    display:grid;
+
+    grid-template-columns:300px 1fr;
+
+    gap:30px;
+
+    align-items:start;
+
+}
+
+/* ===========================
+   CARDS
+=========================== */
+
+.card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+    transition:.25s;
+
+}
+
+.card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 12px 35px rgba(0,0,0,.15);
+
+}
+
+.card h2{
+
+    margin-bottom:25px;
+
+    color:#1565c0;
+
+}
+
+/* ===========================
+   STATUS CARD
+=========================== */
+
+.status-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:15px 0;
+
+    border-bottom:1px solid #ececec;
+
+}
+
+.status-item:last-child{
+
+    border:none;
+
+}
+
+.status-item strong{
+
+    color:#1976d2;
+
+}
+
+.overview-card{
+
+    width:100%;
+
+}
+
+/* ===========================
+   YAML CARD
+=========================== */
+
+.yaml-card{
 
     background:#1e1e1e;
 
-    border-radius:10px;
+    color:white;
 
-    padding:35px;
+    width:100%;
 
-    box-shadow:0 15px 40px rgba(0,0,0,.4);
+    overflow:auto;
 
 }
 
-.yaml-container h2{
+.yaml-card h2{
 
     color:#4FC1FF;
-
-    margin-bottom:30px;
-
-    font-family:Segoe UI;
 
 }
 
 .yaml{
 
-    font-family:Consolas, Monaco, monospace;
+    font-family:Consolas, monospace;
 
-    font-size:17px;
+    font-size:15px;
 
     line-height:1.8;
 
-    white-space:pre-wrap;
+    overflow-x:auto;
 
 }
 
-/* yaml keys */
+/* YAML COLORS */
 
 .key{
 
     color:#4FC1FF;
 
 }
-
-/* docker kubernetes etc */
 
 .section{
 
@@ -62,15 +288,11 @@ body{
 
 }
 
-/* strings */
-
 .string{
 
     color:#CE9178;
 
 }
-
-/* booleans */
 
 .bool{
 
@@ -78,10 +300,218 @@ body{
 
 }
 
-/* numbers */
-
 .number{
 
     color:#B5CEA8;
+
+}
+
+/* ===========================
+   ROADMAP
+=========================== */
+
+.roadmap{
+
+    width:92%;
+
+    max-width:1500px;
+
+    margin:40px auto;
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:40px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+
+}
+
+.roadmap h2{
+
+    margin:0;
+
+    margin-bottom:30px;
+
+    color:#1976d2;
+
+    font-size:2rem;
+
+}
+
+.roadmap-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:18px;
+
+    margin-top:25px;
+
+}
+
+.roadmap-grid div{
+
+    background:#f6f8fa;
+
+    padding:18px;
+
+    border-radius:12px;
+
+    text-align:center;
+
+    font-weight:600;
+
+    transition:.2s;
+
+}
+
+.roadmap-grid div:hover{
+
+    background:#1976d2;
+
+    color:white;
+
+}
+
+.roadmap-content{
+
+    display:grid;
+
+    grid-template-columns:1fr 320px;
+
+    gap:40px;
+
+    align-items:start;
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:1000px){
+
+.dashboard{
+
+    grid-template-columns:1fr;
+
+}
+
+.hero h1{
+
+    font-size:34px;
+
+}
+
+.hero p{
+
+    font-size:17px;
+
+}
+
+}
+
+.security{
+    background:#8e44ad;
+}
+
+.terraform{
+    background:#623CE4;
+}
+/* ============================= */
+/* IMPLEMENTED FEATURES */
+/* ============================= */
+
+.features-container{
+
+    display:grid;
+
+    grid-template-columns:repeat(3, 1fr) 320px;
+
+    gap:50px;
+
+    margin-top:30px;
+
+    align-items:start;
+
+}
+
+.features-column{
+    flex:1;
+    min-width:220px;
+}
+
+.features-column ul{
+
+    list-style:none;
+
+    margin:0;
+
+    padding:0;
+
+}
+
+.features-column li{
+
+    list-style:none;
+
+    margin:14px 0;
+
+    font-size:16px;
+
+    color:#22c55e;
+
+    font-weight:500;
+
+    position:relative;
+
+    padding-left:28px;
+
+}
+
+.features-column li::marker{
+    color:#22c55e;
+}
+
+.progress-column{
+
+    background:#111827;
+
+    color:white;
+
+    border-radius:15px;
+
+    padding:25px;
+
+    align-self:start;
+
+}
+
+.progress-column h3{
+
+    color:#60a5fa;
+
+    margin-bottom:18px;
+
+}
+
+.progress-column ul{
+
+    list-style:none;
+
+    padding:0;
+
+}
+
+.progress-column li{
+
+    color:#f3f4f6;      /* White */
+
+    margin:15px 0;
+
+    font-size:16px;
 
 }

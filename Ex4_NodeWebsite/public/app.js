@@ -3,15 +3,16 @@ async function loadCounter() {
     try {
 
         const response = await fetch("/counter");
+
         const data = await response.json();
 
         document.getElementById("visitor-count").textContent = data.visits;
 
     }
 
-    catch (error) {
+    catch (err) {
 
-        console.error(error);
+        console.error(err);
 
     }
 
@@ -25,43 +26,64 @@ async function loadInfo() {
 
         const info = await response.json();
 
+        // Hostname
         document.getElementById("hostname").textContent = info.hostname;
 
+        // Port
         document.getElementById("port").textContent = info.port;
 
-        document.getElementById("redis-status").textContent =
-            info.redis ? "Connected" : "Disconnected";
+        // Redis
+        const redisStatus = info.redis ? "🟢 Connected" : "🔴 Disconnected";
 
-        /* Detect environment */
+        document.getElementById("redis-status").textContent = redisStatus;
 
-        if (info.hostname.includes("node-app")) {
+        // Environment detection
 
-            document.getElementById("environment").textContent = "Kubernetes";
+        let environment = "Local";
+
+        if (info.hostname.startsWith("node-app")) {
+
+            environment = "☸ Kubernetes";
 
         }
 
-        else if (info.hostname.includes("docker")) {
+        else if (
+            info.hostname.includes("docker") ||
+            info.hostname.length === 12
+        ) {
 
-            document.getElementById("environment").textContent = "Docker";
+            environment = "🐳 Docker";
 
         }
 
         else {
 
-            document.getElementById("environment").textContent = "Local";
+            environment = "💻 Local";
 
         }
 
+        document.getElementById("environment").textContent = environment;
+
     }
 
-    catch(error){
+    catch (err) {
 
-        console.error(error);
+        console.error(err);
 
     }
 
 }
 
-loadCounter();
+async function refresh() {
 
-loadInfo();
+    await loadCounter();
+
+    await loadInfo();
+
+}
+
+// Initial load
+refresh();
+
+// Refresh every 5 seconds
+setInterval(refresh, 5000);
