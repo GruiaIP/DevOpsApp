@@ -54,7 +54,7 @@ jobs:
           format: table
           severity: CRITICAL
           exit-code: 1
-          ignorefile: .trivyignore
+          ignorefile: ./Ex4_NodeWebsite/.trivyignore
 
       # Push image to Docker Hub
       - name: Push Docker image
