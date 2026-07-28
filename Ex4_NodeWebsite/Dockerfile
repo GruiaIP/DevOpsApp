@@ -1,6 +1,6 @@
 # Stage 1 
 # Use an official Node.js image
-FROM node:20-alpine AS builder
+FROM node:22-alpine AS builder
 
 # Create the working directory
 WORKDIR /app
@@ -15,7 +15,7 @@ RUN npm ci
 COPY . .
 
 # Stage 2
-FROM node:20-alpine
+FROM node:22-alpine
 
 WORKDIR /app
 
