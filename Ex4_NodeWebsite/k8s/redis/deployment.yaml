@@ -3,6 +3,7 @@ kind: Deployment
 
 metadata:
   name: redis
+  namespace: devops
 
 spec:
   replicas: 1

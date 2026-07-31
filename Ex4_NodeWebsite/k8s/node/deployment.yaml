@@ -3,6 +3,7 @@ kind: Deployment
 
 metadata:
   name: node-app
+  namespace: devops
 
 spec:
   replicas: 3

@@ -3,6 +3,7 @@ kind: Service
 
 metadata:
   name: redis-service
+  namespace: devops
 
 spec:
   selector:

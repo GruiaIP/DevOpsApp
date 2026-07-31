@@ -3,6 +3,7 @@ kind: ConfigMap
 
 metadata:
   name: node-config
+  namespace: devops
 
 data:
   PORT: "3000"
