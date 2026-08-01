@@ -9,7 +9,19 @@ spec:
   ingressClassName: traefik
 
   rules:
-    - http:
+    - host: ipg-devops.online
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: node-service
+                port:
+                  number: 3000
+
+    - host: www.ipg-devops.online
+      http:
         paths:
           - path: /
             pathType: Prefix
