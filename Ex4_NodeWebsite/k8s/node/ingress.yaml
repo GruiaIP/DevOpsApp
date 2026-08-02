@@ -5,8 +5,17 @@ metadata:
   name: node-app-ingress
   namespace: devops
 
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+
 spec:
   ingressClassName: traefik
+
+  tls:
+    - hosts:
+        - ipg-devops.online
+        - www.ipg-devops.online
+      secretName: ipg-devops-tls
 
   rules:
     - host: ipg-devops.online
