@@ -1,0 +1,90 @@
+# Lightweight monitoring configuration for two t3.small nodes.
+
+alertmanager:
+  enabled: false
+
+prometheus:
+  prometheusSpec:
+    replicas: 1
+
+    retention: 3d
+    retentionSize: "2GB"
+
+    resources:
+      requests:
+        cpu: 100m
+        memory: 350Mi
+      limits:
+        cpu: 500m
+        memory: 750Mi
+
+    storageSpec: {}
+
+grafana:
+  enabled: true
+
+  replicas: 1
+
+  admin:
+    existingSecret: grafana-admin-credentials
+    userKey: admin-user
+    passwordKey: admin-password
+
+  resources:
+    requests:
+      cpu: 50m
+      memory: 150Mi
+    limits:
+      cpu: 300m
+      memory: 350Mi
+
+  persistence:
+    enabled: false
+
+  ingress:
+    enabled: true
+    ingressClassName: traefik
+
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+
+    hosts:
+      - grafana.ipg-devops.online
+
+    path: /
+    pathType: Prefix
+
+    tls:
+      - secretName: grafana-ipg-devops-tls
+        hosts:
+          - grafana.ipg-devops.online
+
+prometheusOperator:
+  resources:
+    requests:
+      cpu: 50m
+      memory: 100Mi
+    limits:
+      cpu: 250m
+      memory: 250Mi
+
+kube-state-metrics:
+  resources:
+    requests:
+      cpu: 25m
+      memory: 50Mi
+    limits:
+      cpu: 150m
+      memory: 150Mi
+
+prometheus-node-exporter:
+  resources:
+    requests:
+      cpu: 25m
+      memory: 30Mi
+    limits:
+      cpu: 150m
+      memory: 100Mi
+
+defaultRules:
+  create: true
