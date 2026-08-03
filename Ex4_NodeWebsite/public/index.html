@@ -127,7 +127,72 @@
 
 </section>
 
+<section class="cluster-health card">
+  <div class="cluster-health-header">
+    <div>
+      <h2>📊 Live Cluster Health</h2>
+      <p>Real-time resource statistics provided by Prometheus</p>
+    </div>
 
+    <span id="cluster-health-status" class="health-status loading">
+      Loading
+    </span>
+  </div>
+
+  <div class="cluster-stats-grid">
+    <article class="cluster-stat">
+      <span class="cluster-stat-icon">⚙️</span>
+      <div>
+        <span class="cluster-stat-label">Cluster CPU</span>
+        <strong id="cluster-cpu">--</strong>
+      </div>
+    </article>
+
+    <article class="cluster-stat">
+      <span class="cluster-stat-icon">🧠</span>
+      <div>
+        <span class="cluster-stat-label">Cluster Memory</span>
+        <strong id="cluster-memory">--</strong>
+      </div>
+    </article>
+
+    <article class="cluster-stat">
+      <span class="cluster-stat-icon">🖥️</span>
+      <div>
+        <span class="cluster-stat-label">Ready Nodes</span>
+        <strong id="ready-nodes">--</strong>
+      </div>
+    </article>
+
+    <article class="cluster-stat">
+      <span class="cluster-stat-icon">📦</span>
+      <div>
+        <span class="cluster-stat-label">Running Pods</span>
+        <strong id="running-pods">--</strong>
+      </div>
+    </article>
+
+    <article class="cluster-stat">
+      <span class="cluster-stat-icon">🚀</span>
+      <div>
+        <span class="cluster-stat-label">App Replicas</span>
+        <strong id="available-replicas">--</strong>
+      </div>
+    </article>
+
+    <article class="cluster-stat">
+      <span class="cluster-stat-icon">📡</span>
+      <div>
+        <span class="cluster-stat-label">Prometheus Targets</span>
+        <strong id="prometheus-targets">--</strong>
+      </div>
+    </article>
+  </div>
+
+  <p id="cluster-stats-updated" class="cluster-stats-updated">
+    Waiting for monitoring data...
+  </p>
+</section>
 
         <!-- ========================= -->
         <!-- YAML CARD -->
