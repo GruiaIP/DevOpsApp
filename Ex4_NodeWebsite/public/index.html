@@ -102,45 +102,97 @@
 <main class="dashboard">
 
     <!-- PROJECT OVERVIEW -->
-    <section class="card overview-card">
+<section class="card overview-card">
 
-        <h2>📋 Project Overview</h2>
+    <h2>📋 Application Overview</h2>
 
-        <div class="overview-item">
-            <span>Application</span>
-            <strong class="green">Running</strong>
+    <div class="overview-item">
+
+        <span>Application</span>
+
+        <strong id="application-status" class="green">
+            Loading
+        </strong>
+
+    </div>
+
+    <div class="overview-item">
+
+        <span>Environment</span>
+
+        <strong id="environment">--</strong>
+
+    </div>
+
+    <div class="overview-item">
+
+        <span>Unique Visitors</span>
+
+        <strong id="visitor-count">--</strong>
+
+    </div>
+
+    <div class="overview-item">
+
+        <span>Page Views</span>
+
+        <strong id="page-view-count">--</strong>
+
+    </div>
+
+    <div class="overview-item">
+
+        <span>Current Version</span>
+
+        <strong id="current-version">--</strong>
+
+    </div>
+
+    <div class="overview-item">
+
+        <span>Last Deployment</span>
+
+        <strong id="last-deployment">--</strong>
+
+    </div>
+
+    <div class="overview-item overview-commit">
+
+        <span>Deployed Commit</span>
+
+        <div class="commit-details">
+
+            <a
+                id="deployment-commit"
+                class="commit-link"
+                href="#"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                --
+            </a>
+
+            <small id="deployment-message">
+                Waiting for deployment data...
+            </small>
+
         </div>
 
-        <div class="overview-item">
-            <span>Environment</span>
-            <strong id="environment"></strong>
-        </div>
+    </div>
 
-        <div class="overview-item">
-            <span>Hostname</span>
-            <strong id="hostname"></strong>
-        </div>
+    <div class="overview-item">
 
-        <div class="overview-item">
-            <span>Visitors</span>
-            <strong id="visitor-count"></strong>
-        </div>
+        <span>Redis</span>
 
-        <div class="overview-item">
-            <span>Redis</span>
-            <strong id="redis-status"></strong>
-        </div>
+        <strong id="redis-status">--</strong>
 
-        <div class="overview-item">
-            <span>Port</span>
-            <strong id="port"></strong>
-        </div>
+    </div>
 
-        <p class="refresh">
-            🔄 Auto refresh every 5 seconds ...
-        </p>
+    <p class="refresh">
+        🔄 Live data refreshes every 5 seconds
+    </p>
 
-    </section>
+</section>
 
 
     <!-- LIVE PROMETHEUS STATISTICS -->
@@ -261,7 +313,7 @@
 
 <span class="key">metadata</span>:
   <span class="key">name</span>: <span class="string">node-website</span>
-  <span class="key">version</span>: <span class="string">1.0.0</span>
+  <span class="key">version</span>: <span class="string">1.6.0</span>
   <span class="key">description</span>: <span class="string">Production-ready cloud-native DevOps portfolio</span>
 
 <span class="key">spec</span>:
@@ -272,8 +324,11 @@
     database: <span class="string">Redis</span>
     api:
       - <span class="string">/</span>
-      - <span class="string">/counter</span>
+	  - <span class="string">/health</span>
       - <span class="string">/info</span>
+	  - <span class="string">/api/visit</span>
+	  - <span class="string">/api/overview</span>
+	  - <span class="string">/api/cluster-stats</span>
 
   <span class="section">containerization</span>:
     docker: <span class="bool">Enabled</span>
@@ -293,7 +348,8 @@
   <span class="section">infrastructure</span>:
     cloud: <span class="string">AWS EC2</span>
     operatingSystem: <span class="string">Ubuntu</span>
-    nodes: <span class="number">2</span>
+    controlPlane: <span class="number">1</span>
+	workers: <span class="number">1</span>
     provisioning: <span class="string">Terraform</span>
     domain: <span class="string">ipg-devops.online</span>
 
