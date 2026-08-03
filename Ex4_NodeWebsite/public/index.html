@@ -27,31 +27,69 @@
             End-to-end DevOps project showcasing containerization, orchestration, CI/CD, security, and cloud deployment.
         </p>
 		
-<p class="stack">
+<div class="hero-lower">
 
-    ⚙ Node.js
+    <div class="stack">
 
-    &nbsp;&nbsp;&nbsp;
+        <span>⚙ Node.js</span>
+        <span class="stack-separator">|</span>
 
-    🐳 Docker
+        <span>🐳 Docker</span>
+        <span class="stack-separator">|</span>
 
-    &nbsp;&nbsp;&nbsp;
+        <span>☸ Kubernetes</span>
+        <span class="stack-separator">|</span>
 
-    ☸ Kubernetes
+        <span>☁ AWS EC2</span>
+        <span class="stack-separator">|</span>
 
-    &nbsp;&nbsp;&nbsp;
+        <span>🔄 CI/CD</span>
+        <span class="stack-separator">|</span>
 
-    ☁ AWS EC2
+        <span>◆ Terraform</span>
+        <span class="stack-separator">|</span>
 
-    &nbsp;&nbsp;&nbsp;
+        <span>🛡 Security</span>
 
-    🔄 CI/CD
+    </div>
 
-    &nbsp;&nbsp;&nbsp;
+    <nav class="hero-buttons" aria-label="Portfolio navigation">
 
-    🛡 Security
+        <a
+            href="https://grafana.ipg-devops.online"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hero-link grafana-link"
+        >
+            📊 Grafana
+        </a>
 
-</p>
+        <span class="hero-link-separator">|</span>
+
+        <a href="/about.html" class="hero-link">
+            📖 Project
+        </a>
+
+        <span class="hero-link-separator">|</span>
+
+        <a
+            href="https://github.com/GruiaIP/DevOpsApp"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hero-link"
+        >
+            GitHub
+        </a>
+
+        <span class="hero-link-separator">|</span>
+
+        <a href="/contact.html" class="hero-link">
+            ✉ Contact
+        </a>
+
+    </nav>
+
+</div>
 
     </header>
 
@@ -200,7 +238,20 @@
 
         <section class="card yaml-card">
 
-            <h2>📄 deployment-summary.yaml</h2>
+<div class="yaml-header">
+
+    <h2>📄 deployment-summary.yaml</h2>
+
+    <a
+        href="https://github.com/GruiaIP/DevOpsApp/tree/main/Ex4_NodeWebsite/k8s"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="yaml-github-link"
+    >
+        View manifests on GitHub ↗
+    </a>
+
+</div>
 
 <pre class="yaml">
 
@@ -284,65 +335,70 @@
 
 <section class="roadmap card">
 
-    <h2>✔ Implemented Features</h2>
+    <div class="roadmap-content-dark">
 
-    <div class="features-container">
+        <div class="roadmap-section implemented-section">
 
-        <div class="features-column">
+            <h2>⭐ Implemented Features</h2>
 
-            <ul>
+            <div class="feature-list-grid">
 
-                <li>✔ Node.js Application</li>
-                <li>✔ Docker Containerization</li>
-                <li>✔ Docker Compose</li>
-                <li>✔ Docker Hub Registry</li>
-                <li>✔ Redis Integration</li>
-                <li>✔ Kubernetes Deployment</li>
+                <ul>
+                    <li>Docker containerization</li>
+                    <li>Docker Hub image registry</li>
+                    <li>Redis-backed shared state</li>
+                    <li>Kubernetes orchestration with K3s</li>
+                    <li>Two-node Kubernetes cluster</li>
+                    <li>Three application replicas</li>
+                    <li>Rolling updates and self-healing</li>
+                    <li>ClusterIP Services</li>
+                </ul>
 
-            </ul>
+                <ul>
+                    <li>Traefik Ingress Controller</li>
+                    <li>Custom domain and DNS</li>
+                    <li>HTTPS with Let's Encrypt</li>
+                    <li>Automated certificates with cert-manager</li>
+                    <li>Terraform Infrastructure as Code</li>
+                    <li>GitHub Actions CI/CD</li>
+                    <li>Trivy vulnerability scanning</li>
+                    <li>GitHub Secrets management</li>
+                </ul>
 
-        </div>
+                <ul>
+                    <li>Prometheus monitoring</li>
+                    <li>Grafana dashboards</li>
+                    <li>Node Exporter metrics</li>
+                    <li>kube-state-metrics</li>
+                    <li>Live homepage cluster metrics</li>
+                    <li>Health and diagnostic endpoints</li>
+                    <li>Kubernetes namespaces</li>
+                    <li>Automated deployment validation</li>
+                </ul>
 
-        <div class="features-column">
-
-            <ul>
-
-                <li>✔ Deployment (3 Replicas)</li>
-                <li>✔ ReplicaSet Management</li>
-                <li>✔ Rolling Updates</li>
-                <li>✔ NodePort Service</li>
-                <li>✔ ConfigMap Mounted</li>
-                <li>✔ AWS EC2 (Ubuntu)</li>
-
-            </ul>
-
-        </div>
-
-        <div class="features-column">
-
-            <ul>
-
-                <li>✔ Nginx Reverse Proxy</li>
-                <li>✔ GitHub Repository</li>
-                <li>✔ GitHub Actions CI/CD</li>
-                <li>✔ Docker Image Build & Push</li>
-                <li>✔ Trivy Image Scanning</li>
-                <li>✔ Security Best Practices</li>
-
-            </ul>
+            </div>
 
         </div>
 
-        <div class="progress-column">
+        <div class="roadmap-divider"></div>
 
-            <h3>🚧 In Progress</h3>
+        <div class="roadmap-section future-section">
 
-            <ul>
+            <h2>🚀 Future Enhancements</h2>
 
-                <li>○ Terraform (Infrastructure as Code)</li>
-                <li>○ Prometheus Monitoring</li>
-                <li>○ Grafana Dashboards</li>
-
+            <ul class="future-list">
+                <li>Helm charts for application packaging</li>
+                <li>GitOps deployments with Argo CD</li>
+                <li>Horizontal Pod Autoscaler</li>
+                <li>Prometheus Alertmanager notifications</li>
+                <li>Centralized logging with Grafana Loki</li>
+                <li>Persistent Prometheus and Grafana storage</li>
+                <li>Automated Kubernetes backups with Velero</li>
+                <li>Blue/green or canary deployments</li>
+                <li>Kubernetes NetworkPolicies</li>
+                <li>External Secrets or Sealed Secrets</li>
+                <li>Application-specific Prometheus metrics</li>
+                <li>Automated integration and smoke testing</li>
             </ul>
 
         </div>
