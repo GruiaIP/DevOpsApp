@@ -61,138 +61,138 @@
     <!-- MAIN CONTENT -->
     <!-- ========================= -->
 
-    <main class="dashboard">
+<main class="dashboard">
 
-        <!-- ========================= -->
-        <!-- STATUS CARD -->
-        <!-- ========================= -->
+    <!-- PROJECT OVERVIEW -->
+    <section class="card overview-card">
 
-<section class="card overview-card">
+        <h2>📋 Project Overview</h2>
 
-<h2>📋 Project Overview</h2>
+        <div class="overview-item">
+            <span>Application</span>
+            <strong class="green">Running</strong>
+        </div>
 
-<div class="overview-item">
+        <div class="overview-item">
+            <span>Environment</span>
+            <strong id="environment"></strong>
+        </div>
 
-<span>Application</span>
+        <div class="overview-item">
+            <span>Hostname</span>
+            <strong id="hostname"></strong>
+        </div>
 
-<strong class="green">Running</strong>
+        <div class="overview-item">
+            <span>Visitors</span>
+            <strong id="visitor-count"></strong>
+        </div>
 
-</div>
+        <div class="overview-item">
+            <span>Redis</span>
+            <strong id="redis-status"></strong>
+        </div>
 
-<div class="overview-item">
+        <div class="overview-item">
+            <span>Port</span>
+            <strong id="port"></strong>
+        </div>
 
-<span>Environment</span>
+        <p class="refresh">
+            🔄 Auto refresh every 5 seconds ...
+        </p>
 
-<strong id="environment"></strong>
+    </section>
 
-</div>
 
-<div class="overview-item">
+    <!-- LIVE PROMETHEUS STATISTICS -->
+    <section class="card cluster-health">
 
-<span>Hostname</span>
+        <div class="cluster-health-header">
 
-<strong id="hostname"></strong>
+            <div>
+                <h2>📊 Live Cluster Health</h2>
+                <p>Real-time resource statistics provided by Prometheus</p>
+            </div>
 
-</div>
+            <span
+                id="cluster-health-status"
+                class="health-status loading"
+            >
+                Loading
+            </span>
 
-<div class="overview-item">
+        </div>
 
-<span>Visitors</span>
+        <div class="cluster-stats-grid">
 
-<strong id="visitor-count"></strong>
+            <article class="cluster-stat">
+                <span class="cluster-stat-icon">⚙️</span>
 
-</div>
+                <div>
+                    <span class="cluster-stat-label">Cluster CPU</span>
+                    <strong id="cluster-cpu">--</strong>
+                </div>
+            </article>
 
-<div class="overview-item">
+            <article class="cluster-stat">
+                <span class="cluster-stat-icon">🧠</span>
 
-<span>Redis</span>
+                <div>
+                    <span class="cluster-stat-label">Cluster Memory</span>
+                    <strong id="cluster-memory">--</strong>
+                </div>
+            </article>
 
-<strong id="redis-status"></strong>
+            <article class="cluster-stat">
+                <span class="cluster-stat-icon">🖥️</span>
 
-</div>
+                <div>
+                    <span class="cluster-stat-label">Ready Nodes</span>
+                    <strong id="ready-nodes">--</strong>
+                </div>
+            </article>
 
-<div class="overview-item">
+            <article class="cluster-stat">
+                <span class="cluster-stat-icon">📦</span>
 
-<span>Port</span>
+                <div>
+                    <span class="cluster-stat-label">Running Pods</span>
+                    <strong id="running-pods">--</strong>
+                </div>
+            </article>
 
-<strong id="port"></strong>
+            <article class="cluster-stat">
+                <span class="cluster-stat-icon">🚀</span>
 
-</div>
+                <div>
+                    <span class="cluster-stat-label">App Replicas</span>
+                    <strong id="available-replicas">--</strong>
+                </div>
+            </article>
 
-<p class="refresh">
+            <article class="cluster-stat">
+                <span class="cluster-stat-icon">📡</span>
 
-🔄 Auto refresh every 5 seconds !
+                <div>
+                    <span class="cluster-stat-label">
+                        Prometheus Targets
+                    </span>
 
-</p>
+                    <strong id="prometheus-targets">--</strong>
+                </div>
+            </article>
 
-</section>
+        </div>
 
-<section class="cluster-health card">
-  <div class="cluster-health-header">
-    <div>
-      <h2>📊 Live Cluster Health</h2>
-      <p>Real-time resource statistics provided by Prometheus</p>
-    </div>
+        <p
+            id="cluster-stats-updated"
+            class="cluster-stats-updated"
+        >
+            Waiting for monitoring data...
+        </p>
 
-    <span id="cluster-health-status" class="health-status loading">
-      Loading
-    </span>
-  </div>
-
-  <div class="cluster-stats-grid">
-    <article class="cluster-stat">
-      <span class="cluster-stat-icon">⚙️</span>
-      <div>
-        <span class="cluster-stat-label">Cluster CPU</span>
-        <strong id="cluster-cpu">--</strong>
-      </div>
-    </article>
-
-    <article class="cluster-stat">
-      <span class="cluster-stat-icon">🧠</span>
-      <div>
-        <span class="cluster-stat-label">Cluster Memory</span>
-        <strong id="cluster-memory">--</strong>
-      </div>
-    </article>
-
-    <article class="cluster-stat">
-      <span class="cluster-stat-icon">🖥️</span>
-      <div>
-        <span class="cluster-stat-label">Ready Nodes</span>
-        <strong id="ready-nodes">--</strong>
-      </div>
-    </article>
-
-    <article class="cluster-stat">
-      <span class="cluster-stat-icon">📦</span>
-      <div>
-        <span class="cluster-stat-label">Running Pods</span>
-        <strong id="running-pods">--</strong>
-      </div>
-    </article>
-
-    <article class="cluster-stat">
-      <span class="cluster-stat-icon">🚀</span>
-      <div>
-        <span class="cluster-stat-label">App Replicas</span>
-        <strong id="available-replicas">--</strong>
-      </div>
-    </article>
-
-    <article class="cluster-stat">
-      <span class="cluster-stat-icon">📡</span>
-      <div>
-        <span class="cluster-stat-label">Prometheus Targets</span>
-        <strong id="prometheus-targets">--</strong>
-      </div>
-    </article>
-  </div>
-
-  <p id="cluster-stats-updated" class="cluster-stats-updated">
-    Waiting for monitoring data...
-  </p>
-</section>
+    </section>
 
         <!-- ========================= -->
         <!-- YAML CARD -->
@@ -235,13 +235,16 @@
     deployment: <span class="bool">Active</span>
     replicas: <span class="number">3</span>
     strategy: <span class="string">RollingUpdate</span>
-    service: <span class="string">NodePort</span>
+    service: <span class="string">ClusterIP</span>
+	ingressController: <span class="string">Traefik</span>
     configuration: <span class="string">ConfigMap</span>
 
   <span class="section">infrastructure</span>:
     cloud: <span class="string">AWS EC2</span>
     operatingSystem: <span class="string">Ubuntu</span>
-    reverseProxy: <span class="string">Nginx</span>
+    nodes: <span class="number">2</span>
+    provisioning: <span class="string">Terraform</span>
+    domain: <span class="string">ipg-devops.online</span>
 
   <span class="section">ci/cd</span>:
     sourceControl: <span class="string">GitHub</span>
@@ -249,16 +252,22 @@
     imageBuild: <span class="bool">Automated</span>
     imagePush: <span class="string">Docker Hub</span>
     imageScanning: <span class="string">Trivy</span>
-
+	
   <span class="section">security</span>:
+    tls: <span class="string">Let's Encrypt</span>
+    certificateManagement: <span class="string">cert-manager</span>
     containerUser: <span class="string">Non-root</span>
     imageScanning: <span class="bool">Enabled</span>
     vulnerabilityAssessment: <span class="bool">Passed</span>
     dependencyManagement: <span class="string">npm</span>
 
-  <span class="section">roadmap</span>:
-    terraform: <span class="string">In Progress</span>
-    monitoring: <span class="string">Prometheus + Grafana</span>
+  <span class="section">observability</span>:
+    metrics: <span class="string">Prometheus</span>
+    dashboards: <span class="string">Grafana</span>
+    nodeMetrics: <span class="string">Node Exporter</span>
+    kubernetesMetrics: <span class="string">kube-state-metrics</span>
+
+
 
 
 </pre>

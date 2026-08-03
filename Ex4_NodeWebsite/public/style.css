@@ -160,11 +160,192 @@ body{
 
     display:grid;
 
-    grid-template-columns:300px 1fr;
+    grid-template-columns:minmax(0, 1fr) minmax(0, 1fr);
 
     gap:30px;
 
-    align-items:start;
+    align-items:stretch;
+
+}
+
+.overview-card,
+.cluster-health{
+
+    width:100%;
+
+    margin:0;
+
+    min-height:100%;
+
+}
+
+.yaml-card{
+
+    grid-column:1 / -1;
+
+}
+
+/* ===========================
+   CLUSTER HEALTH
+=========================== */
+
+.cluster-health-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    margin-bottom:24px;
+
+}
+
+.cluster-health-header h2{
+
+    margin:0 0 6px;
+
+}
+
+.cluster-health-header p{
+
+    margin:0;
+
+    color:#667085;
+
+}
+
+.cluster-stats-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+
+    gap:14px;
+
+}
+
+.cluster-stat{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:15px;
+
+    border:1px solid #e4e7ec;
+
+    border-radius:14px;
+
+    background:#f9fafb;
+
+}
+
+.cluster-stat-icon{
+
+    display:grid;
+
+    place-items:center;
+
+    width:44px;
+
+    height:44px;
+
+    flex-shrink:0;
+
+    border-radius:12px;
+
+    background:white;
+
+    font-size:22px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.06);
+
+}
+
+.cluster-stat-label{
+
+    display:block;
+
+    margin-bottom:4px;
+
+    color:#667085;
+
+    font-size:13px;
+
+}
+
+.cluster-stat strong{
+
+    color:#101828;
+
+    font-size:24px;
+
+}
+
+.cluster-stats-updated{
+
+    margin:18px 0 0;
+
+    color:#667085;
+
+    font-size:13px;
+
+    text-align:right;
+
+}
+
+/* ===========================
+   RESPONSIVE DASHBOARD
+=========================== */
+
+@media(max-width:1000px){
+
+    .dashboard{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .yaml-card{
+
+        grid-column:auto;
+
+    }
+
+    .hero h1{
+
+        font-size:34px;
+
+    }
+
+    .hero p{
+
+        font-size:17px;
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    .cluster-health-header{
+
+        align-items:flex-start;
+
+        flex-direction:column;
+
+    }
+
+    .cluster-stats-grid{
+
+        grid-template-columns:1fr;
+
+    }
 
 }
 
@@ -206,7 +387,7 @@ body{
    STATUS CARD
 =========================== */
 
-.status-item{
+.overview-item{
 
     display:flex;
 
@@ -214,27 +395,55 @@ body{
 
     align-items:center;
 
+    gap:20px;
+
     padding:15px 0;
 
     border-bottom:1px solid #ececec;
 
 }
 
-.status-item:last-child{
+.overview-item:last-of-type{
 
-    border:none;
+    border-bottom:none;
 
 }
 
-.status-item strong{
+.overview-item span{
+
+    color:#475467;
+
+    font-weight:500;
+
+}
+
+.overview-item strong{
 
     color:#1976d2;
 
+    text-align:right;
+
 }
 
-.overview-card{
+.overview-item .green{
 
-    width:100%;
+    color:#16a34a;
+
+}
+
+.refresh{
+
+    margin-top:20px;
+
+    padding-top:18px;
+
+    border-top:1px solid #ececec;
+
+    color:#667085;
+
+    font-size:14px;
+
+    text-align:center;
 
 }
 
@@ -251,6 +460,8 @@ body{
     width:100%;
 
     overflow:auto;
+
+    grid-column:1 / -1;
 
 }
 
@@ -394,9 +605,29 @@ body{
 
 @media(max-width:1000px){
 
-.dashboard{
+    .dashboard{
 
-    grid-template-columns:1fr;
+        grid-template-columns:1fr;
+
+    }
+
+    .yaml-card{
+
+        grid-column:auto;
+
+    }
+
+    .hero h1{
+
+        font-size:34px;
+
+    }
+
+    .hero p{
+
+        font-size:17px;
+
+    }
 
 }
 
@@ -517,7 +748,8 @@ body{
 }
 
 .cluster-health {
-    margin-top: 30px;
+	width:100%;
+    margin:0;
 }
 
 .cluster-health-header {
@@ -565,15 +797,15 @@ body{
 
 .cluster-stats-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:14px;
 }
 
 .cluster-stat {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 18px;
+    gap: 12px;
+    padding: 15px;
     border: 1px solid #e4e7ec;
     border-radius: 14px;
     background: #f9fafb;

@@ -1,0 +1,20 @@
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+*.tfplan
+
+# Terraform variable files may contain secrets
+*.tfvars
+*.tfvars.json
+
+# Keep the dependency lock file
+!.terraform.lock.hcl
+
+# Node.js
+node_modules/
+
+# Logs
+*.log
