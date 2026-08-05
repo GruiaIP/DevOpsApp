@@ -603,48 +603,6 @@ body{
    MOBILE
 =========================== */
 
-@media(max-width:1000px){
-
-    .dashboard{
-
-        grid-template-columns:1fr;
-
-    }
-
-    .yaml-card{
-
-        grid-column:auto;
-
-    }
-
-    .hero h1{
-
-        font-size:34px;
-
-    }
-
-    .hero p{
-
-        font-size:17px;
-
-    }
-
-}
-
-.hero h1{
-
-    font-size:34px;
-
-}
-
-.hero p{
-
-    font-size:17px;
-
-}
-
-}
-
 .security{
     background:#8e44ad;
 }
@@ -2420,4 +2378,338 @@ a.contact-row:hover {
     .project-conclusion {
         flex-direction: column;
     }
+}
+
+/* =========================================================
+   PROJECT PAGE WIDTH
+========================================================= */
+
+.project-page{
+    width:92%;
+    max-width:1500px;
+    margin:0 auto 55px;
+}
+
+.project-card{
+    width:100%;
+    padding:42px;
+}
+
+/* =========================================================
+   PROJECT ARCHITECTURE
+========================================================= */
+
+.project-intro-section{
+    margin-top:0;
+}
+
+.architecture-flow{
+    display:grid;
+    grid-template-columns:
+        minmax(0,1fr)
+        42px
+        minmax(0,1fr)
+        42px
+        minmax(0,1fr);
+    gap:14px;
+    align-items:stretch;
+    margin-top:30px;
+}
+
+.architecture-node{
+    display:flex;
+    align-items:flex-start;
+    gap:16px;
+    min-height:190px;
+    padding:23px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(16,40,66,.9),
+            rgba(7,25,44,.9)
+        );
+
+    border:1px solid rgba(71,106,143,.45);
+    border-radius:15px;
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.architecture-node:hover{
+    transform:translateY(-3px);
+    border-color:rgba(36,147,255,.7);
+    box-shadow:0 16px 30px rgba(0,0,0,.22);
+}
+
+.architecture-icon{
+    display:grid;
+    place-items:center;
+    width:48px;
+    height:48px;
+    flex-shrink:0;
+
+    background:rgba(3,16,29,.88);
+    border:1px solid rgba(72,111,151,.34);
+    border-radius:12px;
+
+    font-size:22px;
+}
+
+.architecture-label{
+    display:block;
+    margin-bottom:6px;
+
+    color:var(--blue-soft);
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+}
+
+.architecture-node h3{
+    margin:0 0 10px;
+    color:var(--text-main);
+    font-size:17px;
+}
+
+.architecture-node p{
+    margin:0;
+    color:var(--text-muted);
+    font-size:13px;
+    line-height:1.6;
+}
+
+.architecture-arrow{
+    display:grid;
+    place-items:center;
+    color:var(--blue-soft);
+    font-size:27px;
+    font-weight:700;
+}
+
+/* =========================================================
+   RUNTIME ARCHITECTURE
+========================================================= */
+
+.runtime-layout{
+    display:grid;
+    grid-template-columns:
+        minmax(0,1fr)
+        36px
+        minmax(0,1fr)
+        36px
+        minmax(0,1fr)
+        36px
+        minmax(0,1fr);
+    gap:10px;
+    align-items:stretch;
+}
+
+.runtime-card{
+    padding:22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15,38,64,.86),
+            rgba(7,25,43,.86)
+        );
+
+    border:1px solid rgba(71,106,143,.42);
+    border-radius:14px;
+}
+
+.runtime-icon{
+    display:block;
+    margin-bottom:12px;
+    font-size:24px;
+}
+
+.runtime-card h3{
+    margin:0 0 9px;
+    color:var(--text-main);
+    font-size:16px;
+}
+
+.runtime-card p{
+    margin:0;
+    color:var(--text-muted);
+    font-size:13px;
+    line-height:1.55;
+}
+
+.runtime-connector{
+    display:grid;
+    place-items:center;
+    color:var(--blue-soft);
+    font-size:24px;
+}
+
+.runtime-mini-pods{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:14px;
+}
+
+.runtime-mini-pods span{
+    padding:5px 8px;
+
+    color:#86efac;
+    background:rgba(34,197,94,.1);
+    border:1px solid rgba(34,197,94,.24);
+    border-radius:7px;
+
+    font-size:10px;
+    font-weight:700;
+}
+
+.runtime-support-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:14px;
+    margin-top:18px;
+}
+
+.runtime-support-card{
+    display:flex;
+    align-items:flex-start;
+    gap:13px;
+    padding:18px;
+
+    background:rgba(7,25,43,.74);
+    border:1px solid rgba(71,106,143,.36);
+    border-radius:13px;
+}
+
+.runtime-support-card > span{
+    font-size:21px;
+}
+
+.runtime-support-card h3{
+    margin:0 0 6px;
+    color:var(--text-main);
+    font-size:14px;
+}
+
+.runtime-support-card p{
+    margin:0;
+    color:var(--text-muted);
+    font-size:12px;
+    line-height:1.5;
+}
+
+/* =========================================================
+   PROJECT TECHNOLOGY STACK
+========================================================= */
+
+.stack-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:16px;
+}
+
+.stack-category{
+    min-height:165px;
+    padding:21px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(16,40,66,.84),
+            rgba(8,27,46,.84)
+        );
+
+    border:1px solid rgba(71,106,143,.42);
+    border-radius:14px;
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease;
+}
+
+.stack-category:hover{
+    transform:translateY(-3px);
+    border-color:rgba(36,147,255,.68);
+}
+
+.stack-category-icon{
+    display:block;
+    margin-bottom:12px;
+    font-size:23px;
+}
+
+.stack-category h3{
+    margin:0 0 14px;
+    color:var(--text-main);
+    font-size:16px;
+}
+
+.technology-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.technology-tags span{
+    padding:6px 9px;
+
+    color:#bfdbfe;
+    background:rgba(37,99,235,.11);
+    border:1px solid rgba(59,130,246,.23);
+    border-radius:7px;
+
+    font-size:11px;
+}
+
+/* =========================================================
+   PROJECT ARCHITECTURE RESPONSIVE
+========================================================= */
+
+@media(max-width:1150px){
+
+    .architecture-flow{
+        grid-template-columns:1fr;
+    }
+
+    .architecture-arrow{
+        min-height:34px;
+        transform:rotate(90deg);
+    }
+
+    .runtime-layout{
+        grid-template-columns:1fr;
+    }
+
+    .runtime-connector{
+        min-height:30px;
+        transform:rotate(90deg);
+    }
+
+    .runtime-support-grid,
+    .stack-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+}
+
+@media(max-width:700px){
+
+    .project-card{
+        padding:26px 22px;
+    }
+
+    .runtime-support-grid,
+    .stack-grid{
+        grid-template-columns:1fr;
+    }
+
+    .architecture-node{
+        min-height:auto;
+    }
+
 }
