@@ -214,66 +214,83 @@
 
         </div>
 
-        <div class="cluster-stats-grid">
+<div class="cluster-stats-grid">
 
-            <article class="cluster-stat">
-                <span class="cluster-stat-icon">⚙️</span>
+    <article class="cluster-stat">
+        <span class="cluster-stat-icon">🗂️</span>
 
-                <div>
-                    <span class="cluster-stat-label">Cluster CPU</span>
-                    <strong id="cluster-cpu">--</strong>
-                </div>
-            </article>
+        <div>
+            <span class="cluster-stat-label">
+                Namespaces
+            </span>
 
-            <article class="cluster-stat">
-                <span class="cluster-stat-icon">🧠</span>
-
-                <div>
-                    <span class="cluster-stat-label">Cluster Memory</span>
-                    <strong id="cluster-memory">--</strong>
-                </div>
-            </article>
-
-            <article class="cluster-stat">
-                <span class="cluster-stat-icon">🖥️</span>
-
-                <div>
-                    <span class="cluster-stat-label">Ready Nodes</span>
-                    <strong id="ready-nodes">--</strong>
-                </div>
-            </article>
-
-            <article class="cluster-stat">
-                <span class="cluster-stat-icon">📦</span>
-
-                <div>
-                    <span class="cluster-stat-label">Running Pods</span>
-                    <strong id="running-pods">--</strong>
-                </div>
-            </article>
-
-            <article class="cluster-stat">
-                <span class="cluster-stat-icon">🚀</span>
-
-                <div>
-                    <span class="cluster-stat-label">App Replicas</span>
-                    <strong id="available-replicas">--</strong>
-                </div>
-            </article>
-
-            <article class="cluster-stat">
-                <span class="cluster-stat-icon">📡</span>
-
-                <div>
-                    <span class="cluster-stat-label">
-                        Prometheus Targets
-                    </span>
-
-                    <strong id="prometheus-targets">--</strong>
-                </div>
-            </article>
-
+            <strong id="namespace-count">--</strong>
         </div>
+    </article>
+
+    <article class="cluster-stat">
+        <span class="cluster-stat-icon">🔌</span>
+
+        <div>
+            <span class="cluster-stat-label">
+                Services
+            </span>
+
+            <strong id="service-count">--</strong>
+        </div>
+    </article>
+
+    <article class="cluster-stat">
+        <span class="cluster-stat-icon">⏱️</span>
+
+        <div>
+            <span class="cluster-stat-label">
+                Cluster Age
+            </span>
+
+            <strong id="cluster-age">--</strong>
+        </div>
+    </article>
+
+    <article class="cluster-stat">
+        <span class="cluster-stat-icon">🚀</span>
+
+        <div>
+            <span class="cluster-stat-label">
+                Deployments
+            </span>
+
+            <strong id="deployment-count">--</strong>
+        </div>
+    </article>
+
+    <article class="cluster-stat">
+        <span class="cluster-stat-icon">📦</span>
+
+        <div>
+            <span class="cluster-stat-label">
+                Healthy Pods
+            </span>
+
+            <strong id="healthy-pods">--</strong>
+        </div>
+    </article>
+
+    <article class="cluster-stat">
+        <span class="cluster-stat-icon">🛡️</span>
+
+        <div>
+            <span class="cluster-stat-label">
+                Cluster Status
+            </span>
+
+            <strong id="cluster-status-value">
+                --
+            </strong>
+        </div>
+    </article>
+
+</div>
 
         <p
             id="cluster-stats-updated"

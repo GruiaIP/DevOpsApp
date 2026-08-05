@@ -129,34 +129,54 @@ function firstValue(result, fallback = 0) {
 app.get("/api/cluster-stats", async (req, res) => {
     try {
         const [
-            cpuResult,
-            memoryResult,
+            namespaceResult,
+            servicesResult,
+            clusterAgeResult,
+            deploymentsResult,
+            healthyPodsResult,
+            activePodsResult,
             readyNodesResult,
-            runningPodsResult,
-            availableReplicasResult,
-            prometheusTargetsResult,
+            totalNodesResult,
         ] = await Promise.all([
+            // Number of Kubernetes namespaces
             queryPrometheus(`
-                100 - (
-                    avg(
-                        rate(
-                            node_cpu_seconds_total{
-                                mode="idle"
-                            }[5m]
-                        )
-                    ) * 100
+                count(kube_namespace_created)
+            `),
+
+            // Number of Kubernetes Services
+            queryPrometheus(`
+                count(kube_service_info)
+            `),
+
+            // Seconds since the oldest Kubernetes node was created
+            queryPrometheus(`
+                time() - min(kube_node_created)
+            `),
+
+            // Number of Kubernetes Deployments
+            queryPrometheus(`
+                count(kube_deployment_created)
+            `),
+
+            // Pods currently reporting Ready=true
+            queryPrometheus(`
+                count(
+                    kube_pod_status_ready{
+                        condition="true"
+                    } == 1
                 )
             `),
 
+            // Active Pods: Pending, Running, or Unknown
             queryPrometheus(`
-                100 * (
-                    1 -
-                    sum(node_memory_MemAvailable_bytes)
-                    /
-                    sum(node_memory_MemTotal_bytes)
+                count(
+                    kube_pod_status_phase{
+                        phase=~"Pending|Running|Unknown"
+                    } == 1
                 )
             `),
 
+            // Ready Kubernetes nodes
             queryPrometheus(`
                 count(
                     kube_node_status_condition{
@@ -166,52 +186,63 @@ app.get("/api/cluster-stats", async (req, res) => {
                 )
             `),
 
+            // Total Kubernetes nodes
             queryPrometheus(`
-                count(
-                    kube_pod_status_phase{
-                        phase="Running"
-                    } == 1
-                )
-            `),
-
-            queryPrometheus(`
-                sum(
-                    kube_deployment_status_replicas_available{
-                        namespace="devops",
-                        deployment="node-app"
-                    }
-                )
-            `),
-
-            queryPrometheus(`
-                sum(up)
+                count(kube_node_info)
             `),
         ]);
 
+        const namespaces = Math.round(
+            firstValue(namespaceResult)
+        );
+
+        const services = Math.round(
+            firstValue(servicesResult)
+        );
+
+        const clusterAgeSeconds = Math.round(
+            firstValue(clusterAgeResult)
+        );
+
+        const deployments = Math.round(
+            firstValue(deploymentsResult)
+        );
+
+        const healthyPods = Math.round(
+            firstValue(healthyPodsResult)
+        );
+
+        const activePods = Math.round(
+            firstValue(activePodsResult)
+        );
+
+        const readyNodes = Math.round(
+            firstValue(readyNodesResult)
+        );
+
+        const totalNodes = Math.round(
+            firstValue(totalNodesResult)
+        );
+
+        const clusterHealthy =
+            totalNodes > 0 &&
+            readyNodes === totalNodes &&
+            activePods > 0 &&
+            healthyPods === activePods;
+
         res.json({
-            cpuPercent: Number(
-                firstValue(cpuResult).toFixed(1)
-            ),
+            namespaces,
+            services,
+            clusterAgeSeconds,
+            deployments,
+            healthyPods,
+            activePods,
+            readyNodes,
+            totalNodes,
 
-            memoryPercent: Number(
-                firstValue(memoryResult).toFixed(1)
-            ),
-
-            readyNodes: Math.round(
-                firstValue(readyNodesResult)
-            ),
-
-            runningPods: Math.round(
-                firstValue(runningPodsResult)
-            ),
-
-            availableReplicas: Math.round(
-                firstValue(availableReplicasResult)
-            ),
-
-            prometheusTargetsUp: Math.round(
-                firstValue(prometheusTargetsResult)
-            ),
+            clusterStatus: clusterHealthy
+                ? "Healthy"
+                : "Degraded",
 
             updatedAt: new Date().toISOString(),
         });
@@ -222,7 +253,8 @@ app.get("/api/cluster-stats", async (req, res) => {
         );
 
         res.status(503).json({
-            error: "Monitoring data is temporarily unavailable",
+            error:
+                "Monitoring data is temporarily unavailable",
         });
     }
 });

@@ -153,6 +153,38 @@ async function loadApplicationOverview() {
     }
 }
 
+function formatDuration(totalSeconds) {
+    const seconds = Number(totalSeconds);
+
+    if (!Number.isFinite(seconds) || seconds < 0) {
+        return "Unavailable";
+    }
+
+    const days = Math.floor(seconds / 86400);
+
+    if (days >= 1) {
+        const hours = Math.floor(
+            (seconds % 86400) / 3600
+        );
+
+        return `${days}d ${hours}h`;
+    }
+
+    const hours = Math.floor(seconds / 3600);
+
+    if (hours >= 1) {
+        const minutes = Math.floor(
+            (seconds % 3600) / 60
+        );
+
+        return `${hours}h ${minutes}m`;
+    }
+
+    const minutes = Math.floor(seconds / 60);
+
+    return `${minutes}m`;
+}
+
 async function loadClusterStats() {
     const status = document.getElementById(
         "cluster-health-status"
@@ -179,33 +211,33 @@ async function loadClusterStats() {
         const stats = await response.json();
 
         setText(
-            "cluster-cpu",
-            `${stats.cpuPercent}%`
+            "namespace-count",
+            stats.namespaces
         );
 
         setText(
-            "cluster-memory",
-            `${stats.memoryPercent}%`
+            "service-count",
+            stats.services
         );
 
         setText(
-            "ready-nodes",
-            stats.readyNodes
+            "cluster-age",
+            formatDuration(stats.clusterAgeSeconds)
         );
 
         setText(
-            "running-pods",
-            stats.runningPods
+            "deployment-count",
+            stats.deployments
         );
 
         setText(
-            "available-replicas",
-            `${stats.availableReplicas}/3`
+            "healthy-pods",
+            `${stats.healthyPods}/${stats.activePods}`
         );
 
         setText(
-            "prometheus-targets",
-            stats.prometheusTargetsUp
+            "cluster-status-value",
+            stats.clusterStatus
         );
 
         setText(
@@ -215,11 +247,38 @@ async function loadClusterStats() {
             ).toLocaleTimeString()}`
         );
 
-        status.textContent = "Healthy";
-        status.className =
-            "health-status healthy";
+        const healthy =
+            stats.clusterStatus === "Healthy";
+
+        status.textContent = healthy
+            ? "Healthy"
+            : "Degraded";
+
+        status.className = healthy
+            ? "health-status healthy"
+            : "health-status unavailable";
+
+        const statusValue =
+            document.getElementById(
+                "cluster-status-value"
+            );
+
+        if (statusValue) {
+            statusValue.classList.toggle(
+                "metric-healthy",
+                healthy
+            );
+
+            statusValue.classList.toggle(
+                "metric-degraded",
+                !healthy
+            );
+        }
     } catch (error) {
-        console.error(error);
+        console.error(
+            "Unable to load cluster statistics:",
+            error
+        );
 
         status.textContent = "Unavailable";
         status.className =

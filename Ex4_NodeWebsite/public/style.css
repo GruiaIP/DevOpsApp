@@ -1582,3 +1582,11 @@ a.contact-row:hover {
         display: none;
     }
 }
+
+.metric-healthy {
+    color: #5ee38b !important;
+}
+
+.metric-degraded {
+    color: #fb7185 !important;
+}
