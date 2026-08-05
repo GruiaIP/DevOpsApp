@@ -216,7 +216,13 @@
 
 <div class="cluster-stats-grid">
 
-    <article class="cluster-stat">
+    <article
+    class="cluster-stat cluster-detail-trigger"
+    data-cluster-detail="namespaces"
+    tabindex="0"
+    role="button"
+    aria-label="View Kubernetes namespace details"
+>
         <span class="cluster-stat-icon">🗂️</span>
 
         <div>
@@ -228,7 +234,13 @@
         </div>
     </article>
 
-    <article class="cluster-stat">
+    <article
+    class="cluster-stat cluster-detail-trigger"
+    data-cluster-detail="namespaces"
+    tabindex="0"
+    role="button"
+    aria-label="View Kubernetes namespace details"
+>
         <span class="cluster-stat-icon">🔌</span>
 
         <div>
@@ -240,7 +252,13 @@
         </div>
     </article>
 
-    <article class="cluster-stat">
+    <article
+    class="cluster-stat cluster-detail-trigger"
+    data-cluster-detail="namespaces"
+    tabindex="0"
+    role="button"
+    aria-label="View Kubernetes namespace details"
+>
         <span class="cluster-stat-icon">⏱️</span>
 
         <div>
@@ -252,7 +270,13 @@
         </div>
     </article>
 
-    <article class="cluster-stat">
+    <article
+    class="cluster-stat cluster-detail-trigger"
+    data-cluster-detail="namespaces"
+    tabindex="0"
+    role="button"
+    aria-label="View Kubernetes namespace details"
+>
         <span class="cluster-stat-icon">🚀</span>
 
         <div>
@@ -264,7 +288,13 @@
         </div>
     </article>
 
-    <article class="cluster-stat">
+    <article
+    class="cluster-stat cluster-detail-trigger"
+    data-cluster-detail="namespaces"
+    tabindex="0"
+    role="button"
+    aria-label="View Kubernetes namespace details"
+>
         <span class="cluster-stat-icon">📦</span>
 
         <div>
@@ -276,7 +306,13 @@
         </div>
     </article>
 
-    <article class="cluster-stat">
+    <article
+    class="cluster-stat cluster-detail-trigger"
+    data-cluster-detail="namespaces"
+    tabindex="0"
+    role="button"
+    aria-label="View Kubernetes namespace details"
+>
         <span class="cluster-stat-icon">🛡️</span>
 
         <div>
@@ -400,7 +436,74 @@
 
     </main>
 
+<div
+    id="cluster-details-overlay"
+    class="cluster-details-overlay"
+    hidden
+></div>
 
+<aside
+    id="cluster-details-panel"
+    class="cluster-details-panel"
+    aria-hidden="true"
+    aria-labelledby="cluster-details-title"
+>
+
+    <div class="cluster-details-header">
+
+        <div>
+            <span class="cluster-details-eyebrow">
+                Live Kubernetes Data
+            </span>
+
+            <h2 id="cluster-details-title">
+                Cluster Details
+            </h2>
+
+            <p id="cluster-details-summary">
+                Select a cluster metric to inspect its resources.
+            </p>
+        </div>
+
+        <button
+            id="cluster-details-close"
+            class="cluster-details-close"
+            type="button"
+            aria-label="Close cluster details"
+        >
+            ×
+        </button>
+
+    </div>
+
+    <div
+        id="cluster-details-loading"
+        class="cluster-details-loading"
+        hidden
+    >
+        <span class="cluster-details-spinner"></span>
+        Loading live cluster resources...
+    </div>
+
+    <div
+        id="cluster-details-error"
+        class="cluster-details-error"
+        hidden
+    >
+        Cluster details are temporarily unavailable.
+    </div>
+
+    <div
+        id="cluster-details-list"
+        class="cluster-details-list"
+    ></div>
+
+    <p
+        id="cluster-details-updated"
+        class="cluster-details-updated"
+    ></p>
+
+</aside>
 
     <!-- ========================= -->
     <!-- ROADMAP -->

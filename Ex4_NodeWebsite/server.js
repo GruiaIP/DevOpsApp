@@ -126,6 +126,42 @@ function firstValue(result, fallback = 0) {
     return Number.isFinite(value) ? value : fallback;
 }
 
+function uniqueResources(result, mapper) {
+    if (!Array.isArray(result)) {
+        return [];
+    }
+
+    const unique = new Map();
+
+    for (const item of result) {
+        const resource = mapper(
+            item?.metric || {},
+            item?.value || []
+        );
+
+        if (!resource || !resource.key) {
+            continue;
+        }
+
+        unique.set(resource.key, resource.value);
+    }
+
+    return [...unique.values()];
+}
+
+function requireAllowedDetailType(type) {
+    const allowedTypes = new Set([
+        "namespaces",
+        "services",
+        "deployments",
+        "pods",
+        "nodes",
+        "status",
+    ]);
+
+    return allowedTypes.has(type);
+}
+
 app.get("/api/cluster-stats", async (req, res) => {
     try {
         const [
@@ -255,6 +291,390 @@ app.get("/api/cluster-stats", async (req, res) => {
         res.status(503).json({
             error:
                 "Monitoring data is temporarily unavailable",
+        });
+    }
+});
+
+app.get("/api/cluster-details", async (req, res) => {
+    const type =
+        typeof req.query.type === "string"
+            ? req.query.type.trim().toLowerCase()
+            : "";
+
+    if (!requireAllowedDetailType(type)) {
+        return res.status(400).json({
+            error: "Unsupported cluster detail type",
+        });
+    }
+
+    try {
+        if (type === "namespaces") {
+            const result = await queryPrometheus(`
+                kube_namespace_created
+            `);
+
+            const items = uniqueResources(
+                result,
+                (metric, value) => {
+                    const name = metric.namespace;
+
+                    if (!name) {
+                        return null;
+                    }
+
+                    return {
+                        key: name,
+                        value: {
+                            name,
+                            createdAt: value[1]
+                                ? new Date(
+                                      Number(value[1]) * 1000
+                                  ).toISOString()
+                                : null,
+                        },
+                    };
+                }
+            ).sort((a, b) =>
+                a.name.localeCompare(b.name)
+            );
+
+            return res.json({
+                type,
+                title: "Kubernetes Namespaces",
+                count: items.length,
+                items,
+                updatedAt: new Date().toISOString(),
+            });
+        }
+
+        if (type === "services") {
+            const result = await queryPrometheus(`
+                kube_service_info
+            `);
+
+            const items = uniqueResources(
+                result,
+                (metric) => {
+                    const namespace = metric.namespace;
+                    const name = metric.service;
+
+                    if (!namespace || !name) {
+                        return null;
+                    }
+
+                    return {
+                        key: `${namespace}/${name}`,
+                        value: {
+                            namespace,
+                            name,
+                            clusterIp:
+                                metric.cluster_ip ||
+                                "Not available",
+                        },
+                    };
+                }
+            ).sort((a, b) =>
+                `${a.namespace}/${a.name}`.localeCompare(
+                    `${b.namespace}/${b.name}`
+                )
+            );
+
+            return res.json({
+                type,
+                title: "Kubernetes Services",
+                count: items.length,
+                items,
+                updatedAt: new Date().toISOString(),
+            });
+        }
+
+        if (type === "deployments") {
+            const result = await queryPrometheus(`
+                kube_deployment_created
+            `);
+
+            const items = uniqueResources(
+                result,
+                (metric, value) => {
+                    const namespace = metric.namespace;
+                    const name = metric.deployment;
+
+                    if (!namespace || !name) {
+                        return null;
+                    }
+
+                    return {
+                        key: `${namespace}/${name}`,
+                        value: {
+                            namespace,
+                            name,
+                            createdAt: value[1]
+                                ? new Date(
+                                      Number(value[1]) * 1000
+                                  ).toISOString()
+                                : null,
+                        },
+                    };
+                }
+            ).sort((a, b) =>
+                `${a.namespace}/${a.name}`.localeCompare(
+                    `${b.namespace}/${b.name}`
+                )
+            );
+
+            return res.json({
+                type,
+                title: "Kubernetes Deployments",
+                count: items.length,
+                items,
+                updatedAt: new Date().toISOString(),
+            });
+        }
+
+        if (type === "pods") {
+            const [readyResult, nodeResult] =
+                await Promise.all([
+                    queryPrometheus(`
+                        kube_pod_status_ready{
+                            condition="true"
+                        } == 1
+                    `),
+
+                    queryPrometheus(`
+                        kube_pod_info
+                    `),
+                ]);
+
+            const podNodes = new Map();
+
+            for (const item of nodeResult) {
+                const metric = item?.metric || {};
+
+                if (
+                    metric.namespace &&
+                    metric.pod
+                ) {
+                    podNodes.set(
+                        `${metric.namespace}/${metric.pod}`,
+                        metric.node || "Unscheduled"
+                    );
+                }
+            }
+
+            const items = uniqueResources(
+                readyResult,
+                (metric) => {
+                    const namespace = metric.namespace;
+                    const name = metric.pod;
+
+                    if (!namespace || !name) {
+                        return null;
+                    }
+
+                    const key = `${namespace}/${name}`;
+
+                    return {
+                        key,
+                        value: {
+                            namespace,
+                            name,
+                            status: "Ready",
+                            node:
+                                podNodes.get(key) ||
+                                "Unknown",
+                        },
+                    };
+                }
+            ).sort((a, b) =>
+                `${a.namespace}/${a.name}`.localeCompare(
+                    `${b.namespace}/${b.name}`
+                )
+            );
+
+            return res.json({
+                type,
+                title: "Healthy Kubernetes Pods",
+                count: items.length,
+                items,
+                updatedAt: new Date().toISOString(),
+            });
+        }
+
+        if (type === "nodes") {
+            const [nodeInfoResult, readyResult] =
+                await Promise.all([
+                    queryPrometheus(`
+                        kube_node_info
+                    `),
+
+                    queryPrometheus(`
+                        kube_node_status_condition{
+                            condition="Ready",
+                            status="true"
+                        } == 1
+                    `),
+                ]);
+
+            const readyNodes = new Set(
+                readyResult
+                    .map(
+                        (item) =>
+                            item?.metric?.node
+                    )
+                    .filter(Boolean)
+            );
+
+            const items = uniqueResources(
+                nodeInfoResult,
+                (metric) => {
+                    const name = metric.node;
+
+                    if (!name) {
+                        return null;
+                    }
+
+                    return {
+                        key: name,
+                        value: {
+                            name,
+                            status: readyNodes.has(name)
+                                ? "Ready"
+                                : "Not Ready",
+                            kernelVersion:
+                                metric.kernel_version ||
+                                "Unknown",
+                            operatingSystem:
+                                metric.os_image ||
+                                metric.operating_system ||
+                                "Unknown",
+                            containerRuntime:
+                                metric.container_runtime_version ||
+                                "Unknown",
+                            kubeletVersion:
+                                metric.kubelet_version ||
+                                "Unknown",
+                        },
+                    };
+                }
+            ).sort((a, b) =>
+                a.name.localeCompare(b.name)
+            );
+
+            return res.json({
+                type,
+                title: "Kubernetes Nodes",
+                count: items.length,
+                items,
+                updatedAt: new Date().toISOString(),
+            });
+        }
+
+        if (type === "status") {
+            const [
+                readyNodesResult,
+                totalNodesResult,
+                healthyPodsResult,
+                activePodsResult,
+            ] = await Promise.all([
+                queryPrometheus(`
+                    count(
+                        kube_node_status_condition{
+                            condition="Ready",
+                            status="true"
+                        }
+                    )
+                `),
+
+                queryPrometheus(`
+                    count(kube_node_info)
+                `),
+
+                queryPrometheus(`
+                    count(
+                        kube_pod_status_ready{
+                            condition="true"
+                        } == 1
+                    )
+                `),
+
+                queryPrometheus(`
+                    count(
+                        kube_pod_status_phase{
+                            phase=~"Pending|Running|Unknown"
+                        } == 1
+                    )
+                `),
+            ]);
+
+            const readyNodes = Math.round(
+                firstValue(readyNodesResult)
+            );
+
+            const totalNodes = Math.round(
+                firstValue(totalNodesResult)
+            );
+
+            const healthyPods = Math.round(
+                firstValue(healthyPodsResult)
+            );
+
+            const activePods = Math.round(
+                firstValue(activePodsResult)
+            );
+
+            const healthy =
+                totalNodes > 0 &&
+                readyNodes === totalNodes &&
+                activePods > 0 &&
+                healthyPods === activePods;
+
+            return res.json({
+                type,
+                title: "Cluster Health Summary",
+                count: 4,
+                status: healthy
+                    ? "Healthy"
+                    : "Degraded",
+
+                items: [
+                    {
+                        label: "Ready Nodes",
+                        value:
+                            `${readyNodes}/${totalNodes}`,
+                    },
+                    {
+                        label: "Healthy Pods",
+                        value:
+                            `${healthyPods}/${activePods}`,
+                    },
+                    {
+                        label: "Node Availability",
+                        value:
+                            readyNodes === totalNodes
+                                ? "All nodes ready"
+                                : "Node attention required",
+                    },
+                    {
+                        label: "Pod Availability",
+                        value:
+                            healthyPods === activePods
+                                ? "All active Pods ready"
+                                : "Pod attention required",
+                    },
+                ],
+
+                updatedAt: new Date().toISOString(),
+            });
+        }
+    } catch (error) {
+        console.error(
+            `Unable to retrieve ${type} details:`,
+            error
+        );
+
+        return res.status(503).json({
+            error:
+                "Cluster details are temporarily unavailable",
         });
     }
 });

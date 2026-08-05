@@ -292,6 +292,7 @@ async function loadClusterStats() {
 }
 
 async function initializePage() {
+	initializeClusterDetails();
     const hasApplicationOverview =
         document.getElementById(
             "application-status"
@@ -321,6 +322,463 @@ async function initializePage() {
             30000
         );
     }
+}
+
+let lastFocusedClusterCard = null;
+
+function formatOptionalDate(value) {
+    if (!value) {
+        return null;
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return null;
+    }
+
+    return date.toLocaleString();
+}
+
+function createDetailField(label, value) {
+    if (!value) {
+        return null;
+    }
+
+    const field =
+        document.createElement("div");
+
+    field.className =
+        "cluster-resource-field";
+
+    const fieldLabel =
+        document.createElement("span");
+
+    fieldLabel.textContent = label;
+
+    const fieldValue =
+        document.createElement("strong");
+
+    fieldValue.textContent = value;
+
+    field.append(fieldLabel, fieldValue);
+
+    return field;
+}
+
+function createClusterResourceItem(type, item) {
+    const resource =
+        document.createElement("article");
+
+    resource.className =
+        "cluster-resource-item";
+
+    const icon =
+        document.createElement("span");
+
+    icon.className =
+        "cluster-resource-icon";
+
+    const iconMap = {
+        namespaces: "🗂️",
+        services: "🔌",
+        deployments: "🚀",
+        pods: "📦",
+        nodes: "🖥️",
+        status: "🛡️",
+    };
+
+    icon.textContent =
+        iconMap[type] || "☸";
+
+    const content =
+        document.createElement("div");
+
+    content.className =
+        "cluster-resource-content";
+
+    if (type === "status") {
+        const label =
+            document.createElement("span");
+
+        label.className =
+            "cluster-resource-namespace";
+
+        label.textContent = item.label;
+
+        const value =
+            document.createElement("h3");
+
+        value.textContent = item.value;
+
+        content.append(label, value);
+        resource.append(icon, content);
+
+        return resource;
+    }
+
+    const namespace =
+        document.createElement("span");
+
+    namespace.className =
+        "cluster-resource-namespace";
+
+    namespace.textContent =
+        item.namespace ||
+        type.slice(0, -1) ||
+        "Kubernetes";
+
+    const name =
+        document.createElement("h3");
+
+    name.textContent =
+        item.name || "Unknown resource";
+
+    content.append(namespace, name);
+
+    const metadata =
+        document.createElement("div");
+
+    metadata.className =
+        "cluster-resource-metadata";
+
+    const fields = [
+        createDetailField(
+            "Status",
+            item.status
+        ),
+
+        createDetailField(
+            "Node",
+            item.node
+        ),
+
+        createDetailField(
+            "Cluster IP",
+            item.clusterIp
+        ),
+
+        createDetailField(
+            "Created",
+            formatOptionalDate(
+                item.createdAt
+            )
+        ),
+
+        createDetailField(
+            "Kubelet",
+            item.kubeletVersion
+        ),
+
+        createDetailField(
+            "Runtime",
+            item.containerRuntime
+        ),
+
+        createDetailField(
+            "Operating System",
+            item.operatingSystem
+        ),
+    ].filter(Boolean);
+
+    if (fields.length > 0) {
+        metadata.append(...fields);
+        content.appendChild(metadata);
+    }
+
+    resource.append(icon, content);
+
+    return resource;
+}
+
+function renderClusterDetails(data) {
+    const title =
+        document.getElementById(
+            "cluster-details-title"
+        );
+
+    const summary =
+        document.getElementById(
+            "cluster-details-summary"
+        );
+
+    const list =
+        document.getElementById(
+            "cluster-details-list"
+        );
+
+    const updated =
+        document.getElementById(
+            "cluster-details-updated"
+        );
+
+    if (!title || !summary || !list) {
+        return;
+    }
+
+    title.textContent =
+        data.title || "Cluster Details";
+
+    summary.textContent =
+        data.type === "status"
+            ? `Current status: ${
+                  data.status || "Unknown"
+              }`
+            : `${data.count || 0} resources found`;
+
+    list.replaceChildren();
+
+    const items = Array.isArray(data.items)
+        ? data.items
+        : [];
+
+    if (items.length === 0) {
+        const empty =
+            document.createElement("p");
+
+        empty.className =
+            "cluster-details-empty";
+
+        empty.textContent =
+            "No resources were returned.";
+
+        list.appendChild(empty);
+    } else {
+        const fragment =
+            document.createDocumentFragment();
+
+        for (const item of items) {
+            fragment.appendChild(
+                createClusterResourceItem(
+                    data.type,
+                    item
+                )
+            );
+        }
+
+        list.appendChild(fragment);
+    }
+
+    if (updated) {
+        updated.textContent = data.updatedAt
+            ? `Updated ${new Date(
+                  data.updatedAt
+              ).toLocaleTimeString()}`
+            : "";
+    }
+}
+
+async function loadClusterDetails(type) {
+    const loading =
+        document.getElementById(
+            "cluster-details-loading"
+        );
+
+    const error =
+        document.getElementById(
+            "cluster-details-error"
+        );
+
+    const list =
+        document.getElementById(
+            "cluster-details-list"
+        );
+
+    if (loading) {
+        loading.hidden = false;
+    }
+
+    if (error) {
+        error.hidden = true;
+    }
+
+    if (list) {
+        list.replaceChildren();
+    }
+
+    try {
+        const response = await fetch(
+            `/api/cluster-details?type=${
+                encodeURIComponent(type)
+            }`,
+            {
+                cache: "no-store",
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                `Cluster details request failed: ${
+                    response.status
+                }`
+            );
+        }
+
+        const data = await response.json();
+
+        renderClusterDetails(data);
+    } catch (requestError) {
+        console.error(
+            "Unable to load cluster details:",
+            requestError
+        );
+
+        if (error) {
+            error.hidden = false;
+        }
+    } finally {
+        if (loading) {
+            loading.hidden = true;
+        }
+    }
+}
+
+function openClusterDetails(type, trigger) {
+    const panel =
+        document.getElementById(
+            "cluster-details-panel"
+        );
+
+    const overlay =
+        document.getElementById(
+            "cluster-details-overlay"
+        );
+
+    const closeButton =
+        document.getElementById(
+            "cluster-details-close"
+        );
+
+    if (!panel || !overlay) {
+        return;
+    }
+
+    lastFocusedClusterCard = trigger;
+
+    overlay.hidden = false;
+
+    requestAnimationFrame(() => {
+        overlay.classList.add("visible");
+        panel.classList.add("open");
+    });
+
+    panel.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+    document.body.classList.add(
+        "cluster-panel-open"
+    );
+
+    loadClusterDetails(type);
+
+    if (closeButton) {
+        closeButton.focus();
+    }
+}
+
+function closeClusterDetails() {
+    const panel =
+        document.getElementById(
+            "cluster-details-panel"
+        );
+
+    const overlay =
+        document.getElementById(
+            "cluster-details-overlay"
+        );
+
+    if (!panel || !overlay) {
+        return;
+    }
+
+    panel.classList.remove("open");
+    overlay.classList.remove("visible");
+
+    panel.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    document.body.classList.remove(
+        "cluster-panel-open"
+    );
+
+    window.setTimeout(() => {
+        overlay.hidden = true;
+    }, 250);
+
+    if (lastFocusedClusterCard) {
+        lastFocusedClusterCard.focus();
+    }
+}
+
+function initializeClusterDetails() {
+    const triggers =
+        document.querySelectorAll(
+            "[data-cluster-detail]"
+        );
+
+    if (triggers.length === 0) {
+        return;
+    }
+
+    triggers.forEach((trigger) => {
+        trigger.addEventListener(
+            "click",
+            () => {
+                openClusterDetails(
+                    trigger.dataset.clusterDetail,
+                    trigger
+                );
+            }
+        );
+
+        trigger.addEventListener(
+            "keydown",
+            (event) => {
+                if (
+                    event.key === "Enter" ||
+                    event.key === " "
+                ) {
+                    event.preventDefault();
+
+                    openClusterDetails(
+                        trigger.dataset.clusterDetail,
+                        trigger
+                    );
+                }
+            }
+        );
+    });
+
+    document
+        .getElementById(
+            "cluster-details-close"
+        )
+        ?.addEventListener(
+            "click",
+            closeClusterDetails
+        );
+
+    document
+        .getElementById(
+            "cluster-details-overlay"
+        )
+        ?.addEventListener(
+            "click",
+            closeClusterDetails
+        );
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+            if (event.key === "Escape") {
+                closeClusterDetails();
+            }
+        }
+    );
 }
 
 initializePage();
