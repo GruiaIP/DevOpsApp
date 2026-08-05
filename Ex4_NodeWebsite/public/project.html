@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Project | DevOps Portfolio</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <header class="hero">
+
+        <h1>🚀 DevOps Portfolio</h1>
+
+        <p>
+            End-to-end DevOps project showcasing containerization, orchestration, CI/CD, Infrastructure as Code, monitoring, security, and cloud deployment.
+        </p>
+
+        <div class="hero-lower">
+
+            <div class="stack">
+
+                <span>⚙ Node.js</span>
+                <span class="stack-separator">|</span>
+
+                <span>🐳 Docker</span>
+                <span class="stack-separator">|</span>
+
+                <span>☸ Kubernetes</span>
+                <span class="stack-separator">|</span>
+
+                <span>☁ AWS EC2</span>
+                <span class="stack-separator">|</span>
+
+                <span>🔄 CI/CD</span>
+                <span class="stack-separator">|</span>
+
+                <span>◆ Terraform</span>
+                <span class="stack-separator">|</span>
+
+                <span>🛡 Security</span>
+
+            </div>
+
+            <nav class="hero-buttons" aria-label="Portfolio navigation">
+
+                <a
+                    href="https://grafana.ipg-devops.online"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hero-link grafana-link"
+                >
+                    📊 Grafana
+                </a>
+
+                <span class="hero-link-separator">|</span>
+
+                <a href="/about.html" class="hero-link">
+                    📖 Project
+                </a>
+
+                <span class="hero-link-separator">|</span>
+
+                <a
+                    href="https://github.com/GruiaIP/DevOpsApp"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hero-link"
+                >
+                    GitHub
+                </a>
+
+                <span class="hero-link-separator">|</span>
+
+                <a href="/" class="hero-link">
+                    🏠 Home
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+	
+<main class="project-page">
+
+<section class="card project-card">
+
+<h2>🏗 Architecture</h2>
+
+<p>
+This project demonstrates the complete lifecycle of a cloud-native
+application, from local development to automated deployment on
+Kubernetes.
+
+It integrates Infrastructure as Code, containerization,
+CI/CD, monitoring, security, HTTPS, load balancing,
+and cloud deployment using production-oriented practices.
+</p>
+
+<h2>⚙ Technology Stack</h2>
+
+<div class="stack-grid">
+
+<div>
+
+<h3>Application</h3>
+
+<ul>
+
+<li>Node.js</li>
+
+<li>Express</li>
+
+<li>Redis</li>
+
+</ul>
+
+</div>
+
+<div>
+
+<h3>Containers</h3>
+
+<ul>
+
+<li>Docker</li>
+
+<li>Docker Hub</li>
+
+</ul>
+
+</div>
+
+<div>
+
+<h3>Kubernetes</h3>
+
+<ul>
+
+<li>K3s</li>
+
+<li>Deployments</li>
+
+<li>ReplicaSets</li>
+
+<li>Services</li>
+
+<li>Ingress</li>
+
+<li>ConfigMaps</li>
+
+</ul>
+
+</div>
+
+<div>
+
+<h3>Cloud</h3>
+
+<ul>
+
+<li>AWS EC2</li>
+
+<li>Ubuntu</li>
+
+<li>Terraform</li>
+
+</ul>
+
+</div>
+
+<div>
+
+<h3>Monitoring</h3>
+
+<ul>
+
+<li>Prometheus</li>
+
+<li>Grafana</li>
+
+</ul>
+
+</div>
+
+<div>
+
+<h3>Security</h3>
+
+<ul>
+
+<li>Trivy</li>
+
+<li>Let's Encrypt</li>
+
+<li>cert-manager</li>
+
+</ul>
+
+</div>
+
+</div>
+
+<h2>🚀 Deployment Pipeline</h2>
+
+<div class="pipeline">
+
+<div>💻 Local Development</div>
+
+<div>→</div>
+
+<div>Git Commit</div>
+
+<div>→</div>
+
+<div>GitHub</div>
+
+<div>→</div>
+
+<div>GitHub Actions</div>
+
+<div>→</div>
+
+<div>Docker Build</div>
+
+<div>→</div>
+
+<div>Docker Hub</div>
+
+<div>→</div>
+
+<div>SSH Deployment</div>
+
+<div>→</div>
+
+<div>Kubernetes</div>
+
+</div>
+
+<pre class="infra-tree">
+
+AWS EC2
+
+├── Control Plane
+
+├── Worker Node
+
+└── Kubernetes Cluster
+
+     ├── Node.js
+
+     ├── Redis
+
+     ├── Prometheus
+
+     ├── Grafana
+
+     ├── Traefik
+
+     └── cert-manager
+
+</pre>
+
+</section>
+
+<!-- ========================= -->
+<!-- IMPLEMENTED FEATURES -->
+<!-- ========================= -->
+
+<section class="project-section">
+
+    <div class="project-section-heading">
+
+        <div>
+            <span class="project-section-eyebrow">
+                Current Platform
+            </span>
+
+            <h2>⭐ Implemented Features</h2>
+        </div>
+
+        <span class="project-section-badge implemented-badge">
+            Production Ready
+        </span>
+
+    </div>
+
+    <p class="project-section-description">
+        The following capabilities are currently implemented and running
+        in the live AWS-hosted Kubernetes environment.
+    </p>
+
+    <div class="project-feature-grid">
+
+        <article class="project-feature-card">
+
+            <span class="project-feature-icon">📦</span>
+
+            <div>
+                <h3>Application and Containers</h3>
+
+                <ul class="implemented-list">
+                    <li>Node.js and Express REST API</li>
+                    <li>Docker containerization</li>
+                    <li>Docker Hub image registry</li>
+                    <li>Non-root container execution</li>
+                    <li>Redis-backed shared application state</li>
+                    <li>Unique visitor and page-view analytics</li>
+                </ul>
+            </div>
+
+        </article>
+
+        <article class="project-feature-card">
+
+            <span class="project-feature-icon">☸</span>
+
+            <div>
+                <h3>Kubernetes Platform</h3>
+
+                <ul class="implemented-list">
+                    <li>Two-node K3s Kubernetes cluster</li>
+                    <li>Dedicated control-plane and worker nodes</li>
+                    <li>Three application replicas</li>
+                    <li>Kubernetes Deployments and ReplicaSets</li>
+                    <li>Rolling updates and self-healing</li>
+                    <li>Namespaces, ConfigMaps, and Services</li>
+                </ul>
+            </div>
+
+        </article>
+
+        <article class="project-feature-card">
+
+            <span class="project-feature-icon">🌐</span>
+
+            <div>
+                <h3>Networking and Security</h3>
+
+                <ul class="implemented-list">
+                    <li>Traefik Ingress Controller</li>
+                    <li>ClusterIP application Services</li>
+                    <li>Custom GoDaddy domain and DNS</li>
+                    <li>HTTPS with Let's Encrypt</li>
+                    <li>Automated certificates with cert-manager</li>
+                    <li>AWS security-group configuration</li>
+                </ul>
+            </div>
+
+        </article>
+
+        <article class="project-feature-card">
+
+            <span class="project-feature-icon">🔄</span>
+
+            <div>
+                <h3>CI/CD and Automation</h3>
+
+                <ul class="implemented-list">
+                    <li>GitHub Actions CI/CD pipeline</li>
+                    <li>Automated Docker image builds</li>
+                    <li>Automated Docker Hub publishing</li>
+                    <li>Trivy image vulnerability scanning</li>
+                    <li>Automated Kubernetes deployment</li>
+                    <li>Deployment commit and version metadata</li>
+                </ul>
+            </div>
+
+        </article>
+
+        <article class="project-feature-card">
+
+            <span class="project-feature-icon">🏗️</span>
+
+            <div>
+                <h3>Infrastructure as Code</h3>
+
+                <ul class="implemented-list">
+                    <li>AWS EC2 infrastructure</li>
+                    <li>Terraform worker-node provisioning</li>
+                    <li>Terraform-managed security groups</li>
+                    <li>Automated networking rules</li>
+                    <li>Elastic IP and stable public access</li>
+                    <li>Version-controlled infrastructure configuration</li>
+                </ul>
+            </div>
+
+        </article>
+
+        <article class="project-feature-card">
+
+            <span class="project-feature-icon">📊</span>
+
+            <div>
+                <h3>Monitoring and Observability</h3>
+
+                <ul class="implemented-list">
+                    <li>Prometheus metrics collection</li>
+                    <li>Grafana monitoring dashboards</li>
+                    <li>Node Exporter host metrics</li>
+                    <li>kube-state-metrics integration</li>
+                    <li>Live cluster-health homepage metrics</li>
+                    <li>Interactive Kubernetes resource details</li>
+                </ul>
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- ========================= -->
+<!-- FUTURE ROADMAP -->
+<!-- ========================= -->
+
+<section class="project-section">
+
+    <div class="project-section-heading">
+
+        <div>
+            <span class="project-section-eyebrow">
+                Next Development Stages
+            </span>
+
+            <h2>🚀 Future Roadmap</h2>
+        </div>
+
+        <span class="project-section-badge roadmap-badge">
+            In Progress
+        </span>
+
+    </div>
+
+    <p class="project-section-description">
+        The next project phases will focus on application packaging,
+        GitOps, scalability, stronger security, centralized logging,
+        alerting, and disaster recovery.
+    </p>
+
+    <div class="roadmap-timeline">
+
+        <article class="roadmap-item roadmap-priority">
+
+            <div class="roadmap-marker">
+                1
+            </div>
+
+            <div class="roadmap-item-content">
+
+                <div class="roadmap-item-header">
+                    <h3>Helm Application Packaging</h3>
+
+                    <span class="roadmap-status next">
+                        Next
+                    </span>
+                </div>
+
+                <p>
+                    Convert the existing Kubernetes manifests into a
+                    reusable Helm chart with configurable values for
+                    replicas, image tags, resources, networking, ingress,
+                    and environment-specific settings.
+                </p>
+
+                <div class="roadmap-tags">
+                    <span>Helm</span>
+                    <span>Templates</span>
+                    <span>values.yaml</span>
+                </div>
+
+            </div>
+
+        </article>
+
+        <article class="roadmap-item roadmap-priority">
+
+            <div class="roadmap-marker">
+                2
+            </div>
+
+            <div class="roadmap-item-content">
+
+                <div class="roadmap-item-header">
+                    <h3>GitOps with Argo CD</h3>
+
+                    <span class="roadmap-status planned">
+                        Planned
+                    </span>
+                </div>
+
+                <p>
+                    Replace direct SSH-based Kubernetes deployments with
+                    a GitOps workflow where Argo CD continuously compares
+                    the live cluster with the desired state stored in Git.
+                </p>
+
+                <div class="roadmap-tags">
+                    <span>Argo CD</span>
+                    <span>GitOps</span>
+                    <span>Auto Sync</span>
+                </div>
+
+            </div>
+
+        </article>
+
+        <article class="roadmap-item">
+
+            <div class="roadmap-marker">
+                3
+            </div>
+
+            <div class="roadmap-item-content">
+
+                <div class="roadmap-item-header">
+                    <h3>Autoscaling and Resource Optimization</h3>
+
+                    <span class="roadmap-status planned">
+                        Planned
+                    </span>
+                </div>
+
+                <p>
+                    Implement Horizontal Pod Autoscaler policies and
+                    improve resource requests and limits based on live
+                    Prometheus measurements.
+                </p>
+
+                <div class="roadmap-tags">
+                    <span>HPA</span>
+                    <span>Metrics Server</span>
+                    <span>Scaling</span>
+                </div>
+
+            </div>
+
+        </article>
+
+        <article class="roadmap-item">
+
+            <div class="roadmap-marker">
+                4
+            </div>
+
+            <div class="roadmap-item-content">
+
+                <div class="roadmap-item-header">
+                    <h3>Centralized Logging</h3>
+
+                    <span class="roadmap-status planned">
+                        Planned
+                    </span>
+                </div>
+
+                <p>
+                    Add Grafana Loki and a log collector such as Promtail
+                    to centralize application, ingress, and Kubernetes
+                    logs inside Grafana.
+                </p>
+
+                <div class="roadmap-tags">
+                    <span>Loki</span>
+                    <span>Promtail</span>
+                    <span>Grafana</span>
+                </div>
+
+            </div>
+
+        </article>
+
+        <article class="roadmap-item">
+
+            <div class="roadmap-marker">
+                5
+            </div>
+
+            <div class="roadmap-item-content">
+
+                <div class="roadmap-item-header">
+                    <h3>Alerting and Notifications</h3>
+
+                    <span class="roadmap-status planned">
+                        Planned
+                    </span>
+                </div>
+
+                <p>
+                    Configure Prometheus Alertmanager to send
+                    notifications when nodes become unavailable,
+                    Pods fail, memory usage increases, or deployments
+                    lose available replicas.
+                </p>
+
+                <div class="roadmap-tags">
+                    <span>Alertmanager</span>
+                    <span>Prometheus Rules</span>
+                    <span>Notifications</span>
+                </div>
+
+            </div>
+
+        </article>
+
+        <article class="roadmap-item">
+
+            <div class="roadmap-marker">
+                6
+            </div>
+
+            <div class="roadmap-item-content">
+
+                <div class="roadmap-item-header">
+                    <h3>Improved Kubernetes Security</h3>
+
+                    <span class="roadmap-status planned">
+                        Planned
+                    </span>
+                </div>
+
+                <p>
+                    Add NetworkPolicies, Kubernetes security contexts,
+                    external secret management, stricter RBAC policies,
+                    and additional supply-chain security controls.
+                </p>
+
+                <div class="roadmap-tags">
+                    <span>NetworkPolicy</span>
+                    <span>RBAC</span>
+                    <span>Secrets</span>
+                </div>
+
+            </div>
+
+        </article>
+
+        <article class="roadmap-item">
+
+            <div class="roadmap-marker">
+                7
+            </div>
+
+            <div class="roadmap-item-content">
+
+                <div class="roadmap-item-header">
+                    <h3>Advanced Deployment Strategies</h3>
+
+                    <span class="roadmap-status planned">
+                        Planned
+                    </span>
+                </div>
+
+                <p>
+                    Introduce blue/green or canary deployments to reduce
+                    deployment risk and validate new application versions
+                    before directing all production traffic to them.
+                </p>
+
+                <div class="roadmap-tags">
+                    <span>Canary</span>
+                    <span>Blue/Green</span>
+                    <span>Progressive Delivery</span>
+                </div>
+
+            </div>
+
+        </article>
+
+        <article class="roadmap-item">
+
+            <div class="roadmap-marker">
+                8
+            </div>
+
+            <div class="roadmap-item-content">
+
+                <div class="roadmap-item-header">
+                    <h3>Backup and Disaster Recovery</h3>
+
+                    <span class="roadmap-status planned">
+                        Planned
+                    </span>
+                </div>
+
+                <p>
+                    Introduce automated Kubernetes backups using Velero
+                    and define recovery procedures for cluster resources,
+                    persistent monitoring data, and application state.
+                </p>
+
+                <div class="roadmap-tags">
+                    <span>Velero</span>
+                    <span>Backup</span>
+                    <span>Recovery</span>
+                </div>
+
+            </div>
+
+        </article>
+
+        <article class="roadmap-item">
+
+            <div class="roadmap-marker">
+                9
+            </div>
+
+            <div class="roadmap-item-content">
+
+                <div class="roadmap-item-header">
+                    <h3>Multi-Environment Delivery</h3>
+
+                    <span class="roadmap-status planned">
+                        Planned
+                    </span>
+                </div>
+
+                <p>
+                    Create separate development, staging, and production
+                    values and deployment configurations to demonstrate
+                    environment promotion through CI/CD and GitOps.
+                </p>
+
+                <div class="roadmap-tags">
+                    <span>Development</span>
+                    <span>Staging</span>
+                    <span>Production</span>
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- ========================= -->
+<!-- PROJECT LINKS -->
+<!-- ========================= -->
+
+<section class="project-section project-links-section">
+
+    <div class="project-section-heading">
+
+        <div>
+            <span class="project-section-eyebrow">
+                Explore the Platform
+            </span>
+
+            <h2>🔗 Project Links</h2>
+        </div>
+
+    </div>
+
+    <div class="project-links-grid">
+
+        <a
+            href="https://ipg-devops.online"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="project-link-card"
+        >
+
+            <span class="project-link-icon">🌐</span>
+
+            <div>
+                <span class="project-link-label">
+                    Live Application
+                </span>
+
+                <strong>
+                    ipg-devops.online
+                </strong>
+
+                <p>
+                    Open the production application and inspect the live
+                    cluster dashboard.
+                </p>
+            </div>
+
+            <span class="project-link-arrow">↗</span>
+
+        </a>
+
+        <a
+            href="https://github.com/GruiaIP/DevOpsApp"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="project-link-card"
+        >
+
+            <span class="project-link-icon">💻</span>
+
+            <div>
+                <span class="project-link-label">
+                    GitHub Repository
+                </span>
+
+                <strong>
+                    GruiaIP/DevOpsApp
+                </strong>
+
+                <p>
+                    Explore the source code, Kubernetes resources,
+                    Terraform infrastructure, and CI/CD workflow.
+                </p>
+            </div>
+
+            <span class="project-link-arrow">↗</span>
+
+        </a>
+
+        <a
+            href="https://grafana.ipg-devops.online"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="project-link-card"
+        >
+
+            <span class="project-link-icon">📊</span>
+
+            <div>
+                <span class="project-link-label">
+                    Grafana
+                </span>
+
+                <strong>
+                    Monitoring Dashboards
+                </strong>
+
+                <p>
+                    View detailed Kubernetes, node, Pod, and
+                    infrastructure monitoring dashboards.
+                </p>
+            </div>
+
+            <span class="project-link-arrow">↗</span>
+
+        </a>
+
+        <a
+            href="/contact.html"
+            class="project-link-card"
+        >
+
+            <span class="project-link-icon">✉️</span>
+
+            <div>
+                <span class="project-link-label">
+                    Contact
+                </span>
+
+                <strong>
+                    Get in Touch
+                </strong>
+
+                <p>
+                    View my contact information and professional links.
+                </p>
+            </div>
+
+            <span class="project-link-arrow">→</span>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ========================= -->
+<!-- PROJECT FOOTER MESSAGE -->
+<!-- ========================= -->
+
+<section class="project-conclusion">
+
+    <span class="project-conclusion-icon">
+        🚀
+    </span>
+
+    <div>
+        <h2>Built as a Continuous Learning Platform</h2>
+
+        <p>
+            This project continues to evolve as new DevOps,
+            cloud-native, automation, security, and observability
+            technologies are introduced. Every implementation is
+            developed locally, version-controlled in GitHub, validated
+            through CI/CD, and deployed to the live Kubernetes
+            environment.
+        </p>
+    </div>
+
+</section>
+
+</section>
+
+</main>
+
+<script src="app.js"></script>
+
+</body>
+
+</html>
+
+</main>
