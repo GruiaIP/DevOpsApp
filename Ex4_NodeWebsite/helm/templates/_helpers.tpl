@@ -14,8 +14,6 @@ Node application selector labels
 */}}
 {{- define "devops-app.nodeSelectorLabels" -}}
 app: {{ .Values.nodeApp.name }}
-app.kubernetes.io/component: application
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
@@ -23,6 +21,4 @@ Redis selector labels
 */}}
 {{- define "devops-app.redisSelectorLabels" -}}
 app: {{ .Values.redis.name }}
-app.kubernetes.io/component: redis
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
