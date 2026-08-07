@@ -1,0 +1,84 @@
+namespace:
+  create: true
+  name: devops
+
+image:
+  repository: gip37/node-website
+  tag: latest
+  pullPolicy: Always
+
+nodeApp:
+  name: node-app
+  replicas: 3
+  containerPort: 3000
+
+  environment:
+    nodeEnv: production
+    redisUrl: redis://redis-service:6379
+    prometheusUrl: >-
+      http://monitoring-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
+
+  resources:
+    requests:
+      cpu: 50m
+      memory: 96Mi
+    limits:
+      cpu: 300m
+      memory: 256Mi
+
+  probes:
+    readiness:
+      initialDelaySeconds: 10
+      periodSeconds: 10
+      timeoutSeconds: 3
+      failureThreshold: 3
+
+    liveness:
+      initialDelaySeconds: 20
+      periodSeconds: 20
+      timeoutSeconds: 3
+      failureThreshold: 3
+
+service:
+  name: node-service
+  type: ClusterIP
+  port: 3000
+  targetPort: 3000
+
+redis:
+  name: redis
+  image:
+    repository: redis
+    tag: 7-alpine
+    pullPolicy: IfNotPresent
+
+  port: 6379
+
+  resources:
+    requests:
+      cpu: 25m
+      memory: 64Mi
+    limits:
+      cpu: 150m
+      memory: 192Mi
+
+redisService:
+  name: redis-service
+  type: ClusterIP
+  port: 6379
+  targetPort: 6379
+
+ingress:
+  enabled: true
+  className: traefik
+  host: ipg-devops.online
+
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+
+  tls:
+    enabled: true
+    secretName: ipg-devops-tls
+
+config:
+  appName: node-app

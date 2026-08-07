@@ -17,4 +17,4 @@ crash.*.log
 node_modules/
 
 # Logs
-*.log
+*.logrendered-helm.yaml

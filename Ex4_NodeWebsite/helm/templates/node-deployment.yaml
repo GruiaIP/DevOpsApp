@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ .Values.nodeApp.name }}
+  namespace: {{ .Values.namespace.name }}
+
+  labels:
+    {{- include "devops-app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: application
+
+spec:
+  replicas: {{ .Values.nodeApp.replicas }}
+
+  strategy:
+    type: RollingUpdate
+
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+
+  selector:
+    matchLabels:
+      {{- include "devops-app.nodeSelectorLabels" . | nindent 6 }}
+
+  template:
+    metadata:
+      labels:
+        {{- include "devops-app.nodeSelectorLabels" . | nindent 8 }}
+
+    spec:
+      containers:
+        - name: {{ .Values.nodeApp.name }}
+
+          image: >-
+            {{ .Values.image.repository }}:{{ .Values.image.tag }}
+
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          ports:
+            - name: http
+              containerPort: {{ .Values.nodeApp.containerPort }}
+              protocol: TCP
+
+          env:
+            - name: PORT
+              value: {{ .Values.nodeApp.containerPort | quote }}
+
+            - name: REDIS_URL
+              value: {{ .Values.nodeApp.environment.redisUrl | quote }}
+
+          envFrom:
+            - configMapRef:
+                name: node-config
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+
+            initialDelaySeconds: >-
+              {{ .Values.nodeApp.probes.readiness.initialDelaySeconds }}
+
+            periodSeconds: >-
+              {{ .Values.nodeApp.probes.readiness.periodSeconds }}
+
+            timeoutSeconds: >-
+              {{ .Values.nodeApp.probes.readiness.timeoutSeconds }}
+
+            failureThreshold: >-
+              {{ .Values.nodeApp.probes.readiness.failureThreshold }}
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+
+            initialDelaySeconds: >-
+              {{ .Values.nodeApp.probes.liveness.initialDelaySeconds }}
+
+            periodSeconds: >-
+              {{ .Values.nodeApp.probes.liveness.periodSeconds }}
+
+            timeoutSeconds: >-
+              {{ .Values.nodeApp.probes.liveness.timeoutSeconds }}
+
+            failureThreshold: >-
+              {{ .Values.nodeApp.probes.liveness.failureThreshold }}
+
+          resources:
+            {{- toYaml .Values.nodeApp.resources | nindent 12 }}
