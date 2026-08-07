@@ -82,3 +82,9 @@ ingress:
 
 config:
   appName: node-app
+  
+deploymentMetadata:
+  appVersion: "1.6.0"
+  gitCommit: "local"
+  gitMessage: "Local development"
+  deployedAt: ""
