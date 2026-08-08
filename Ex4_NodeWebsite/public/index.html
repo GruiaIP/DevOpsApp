@@ -207,6 +207,33 @@
         <strong id="redis-status">--</strong>
 
     </div>
+	
+	<div class="gitops-overview">
+
+    <div class="gitops-item">
+        <span class="gitops-label">Deployment Model</span>
+        <span class="gitops-value">GitOps</span>
+    </div>
+
+    <div class="gitops-item">
+        <span class="gitops-label">CD Engine</span>
+        <span class="gitops-value">Argo CD</span>
+    </div>
+
+    <div class="gitops-item">
+        <span class="gitops-label">Package Manager</span>
+        <span class="gitops-value">Helm</span>
+    </div>
+
+    <div class="gitops-item">
+        <span class="gitops-label">Sync Policy</span>
+        <span class="gitops-value gitops-active">
+            <span class="status-dot"></span>
+            Automated
+        </span>
+    </div>
+
+</div>
 
     <p class="refresh">
         🔄 Live data refreshes every 5 seconds
@@ -411,11 +438,12 @@
 
   <span class="section">orchestration</span>:
     platform: <span class="string">Kubernetes</span>
-    deployment: <span class="bool">Active</span>
-    replicas: <span class="number">3</span>
+    distribution: <span class="string">K3s</span>
+    nodes: <span class="number">2</span>
+    applicationReplicas: <span class="number">3</span>
     strategy: <span class="string">RollingUpdate</span>
-    service: <span class="string">ClusterIP</span>
-	ingressController: <span class="string">Traefik</span>
+    ingressController: <span class="string">Traefik</span>
+    packageManager: <span class="string">Helm</span>
     configuration: <span class="string">ConfigMap</span>
 
   <span class="section">infrastructure</span>:
@@ -425,13 +453,20 @@
 	workers: <span class="number">1</span>
     provisioning: <span class="string">Terraform</span>
     domain: <span class="string">ipg-devops.online</span>
-
-  <span class="section">ci/cd</span>:
+	
+  <span class="section">delivery</span>:
     sourceControl: <span class="string">GitHub</span>
-    automation: <span class="string">GitHub Actions</span>
+    ci: <span class="string">GitHub Actions</span>
+    registry: <span class="string">Docker Hub</span>
     imageBuild: <span class="bool">Automated</span>
-    imagePush: <span class="string">Docker Hub</span>
     imageScanning: <span class="string">Trivy</span>
+    imageStrategy: <span class="string">Immutable Git SHA</span>
+    packageManager: <span class="string">Helm</span>
+    cd: <span class="string">Argo CD</span>
+    deploymentModel: <span class="string">GitOps</span>
+    autoSync: <span class="bool">Enabled</span>
+    selfHeal: <span class="bool">Enabled</span>
+    pruning: <span class="bool">Enabled</span>
 	
   <span class="section">security</span>:
     tls: <span class="string">Let's Encrypt</span>
@@ -443,9 +478,10 @@
 
   <span class="section">observability</span>:
     metrics: <span class="string">Prometheus</span>
-    dashboards: <span class="string">Grafana</span>
+    visualization: <span class="string">Grafana</span>
     nodeMetrics: <span class="string">Node Exporter</span>
     kubernetesMetrics: <span class="string">kube-state-metrics</span>
+    liveClusterHealth: <span class="bool">Enabled</span>
 
 
 
@@ -548,24 +584,27 @@
                     <li>Three application replicas</li>
                     <li>Rolling updates and self-healing</li>
                     <li>ClusterIP Services</li>
+					<li>Traefik Ingress Controller</li>
+                    <li>Custom domain and DNS</li>
                 </ul>
 
                 <ul>
-                    <li>Traefik Ingress Controller</li>
-                    <li>Custom domain and DNS</li>
+
                     <li>HTTPS with Let's Encrypt</li>
                     <li>Automated certificates with cert-manager</li>
                     <li>Terraform Infrastructure as Code</li>
                     <li>GitHub Actions CI/CD</li>
                     <li>Trivy vulnerability scanning</li>
                     <li>GitHub Secrets management</li>
+					<li>Prometheus monitoring</li>
+                    <li>Grafana dashboards</li>
+                    <li>Node Exporter metrics</li>
+					<li>kube-state-metrics</li>
                 </ul>
 
                 <ul>
-                    <li>Prometheus monitoring</li>
-                    <li>Grafana dashboards</li>
-                    <li>Node Exporter metrics</li>
-                    <li>kube-state-metrics</li>
+
+
                     <li>Live homepage cluster metrics</li>
                     <li>Health and diagnostic endpoints</li>
                     <li>Kubernetes namespaces</li>
