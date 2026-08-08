@@ -5,68 +5,193 @@ on:
     branches:
       - main
 
+    # Prevent the GitOps commit created by this workflow
+    # from triggering another Docker build.
+    paths-ignore:
+      - "Ex4_NodeWebsite/helm/values.yaml"
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read
+      contents: write
       security-events: write
 
     steps:
-      # Checkout repository
+
+      # =====================================================
+      # CHECKOUT
+      # =====================================================
+
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      # Login to Docker Hub
+
+      # =====================================================
+      # DEPLOYMENT METADATA
+      # =====================================================
+
+      - name: Generate deployment metadata
+        id: metadata
+        shell: bash
+        run: |
+          SHORT_SHA="${GITHUB_SHA::7}"
+          APP_VERSION=$(jq -r '.version' Ex4_NodeWebsite/package.json)
+          GIT_MESSAGE=$(git log -1 --pretty=%s)
+          DEPLOYED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+          echo "short_sha=$SHORT_SHA" >> "$GITHUB_OUTPUT"
+          echo "app_version=$APP_VERSION" >> "$GITHUB_OUTPUT"
+          echo "deployed_at=$DEPLOYED_AT" >> "$GITHUB_OUTPUT"
+
+          {
+            echo "git_message<<EOF"
+            echo "$GIT_MESSAGE"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+          echo "Application version: $APP_VERSION"
+          echo "Git commit: $GITHUB_SHA"
+          echo "Image tag: $SHORT_SHA"
+          echo "Commit message: $GIT_MESSAGE"
+          echo "Deployment time: $DEPLOYED_AT"
+
+
+      # =====================================================
+      # DOCKER HUB LOGIN
+      # =====================================================
+
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # Build Docker image
-      - name: Build Docker image
-        run: |
-          docker build -t gip37/node-website:latest ./Ex4_NodeWebsite
 
-      # Generate SARIF report
+      # =====================================================
+      # BUILD DOCKER IMAGE
+      # =====================================================
+
+      - name: Build Docker image
+        shell: bash
+        run: |
+          docker build \
+            -t gip37/node-website:${{ steps.metadata.outputs.short_sha }} \
+            -t gip37/node-website:latest \
+            ./Ex4_NodeWebsite
+
+
+      # =====================================================
+      # SECURITY SCANNING
+      # =====================================================
+
       - name: Generate Trivy SARIF report
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: gip37/node-website:latest
+          image-ref: gip37/node-website:${{ steps.metadata.outputs.short_sha }}
           format: sarif
           output: trivy-results.sarif
           severity: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
           exit-code: 0
 
-      # Upload SARIF report
+
       - name: Upload Trivy scan results
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: trivy-results.sarif
 
-      # Fail only on CRITICAL vulnerabilities
+
       - name: Fail on Critical vulnerabilities
         continue-on-error: true
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: gip37/node-website:latest
+          image-ref: gip37/node-website:${{ steps.metadata.outputs.short_sha }}
           format: table
           severity: CRITICAL
           exit-code: 1
 
-      # Push image to Docker Hub
-      - name: Push Docker image
+
+      # =====================================================
+      # PUSH DOCKER IMAGE
+      # =====================================================
+
+      - name: Push Docker images
+        shell: bash
         run: |
+          docker push gip37/node-website:${{ steps.metadata.outputs.short_sha }}
           docker push gip37/node-website:latest
 
-      # Deploy to EC2
-      - name: Deploy to EC2
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            ~/deploy.sh
+
+      # =====================================================
+      # UPDATE HELM DESIRED STATE
+      # =====================================================
+
+      - name: Install YAML support
+        run: python3 -m pip install PyYAML
+
+
+      - name: Update Helm values
+        env:
+          IMAGE_TAG: ${{ steps.metadata.outputs.short_sha }}
+          APP_VERSION: ${{ steps.metadata.outputs.app_version }}
+          GIT_COMMIT: ${{ github.sha }}
+          GIT_MESSAGE: ${{ steps.metadata.outputs.git_message }}
+          DEPLOYED_AT: ${{ steps.metadata.outputs.deployed_at }}
+        shell: bash
+        run: |
+          python3 <<'PY'
+          import os
+          import yaml
+
+          path = "Ex4_NodeWebsite/helm/values.yaml"
+
+          with open(path, "r", encoding="utf-8") as file:
+              values = yaml.safe_load(file)
+
+          values["image"]["tag"] = os.environ["IMAGE_TAG"]
+
+          values["deploymentMetadata"]["appVersion"] = os.environ["APP_VERSION"]
+          values["deploymentMetadata"]["gitCommit"] = os.environ["GIT_COMMIT"]
+          values["deploymentMetadata"]["gitMessage"] = os.environ["GIT_MESSAGE"]
+          values["deploymentMetadata"]["deployedAt"] = os.environ["DEPLOYED_AT"]
+
+          with open(path, "w", encoding="utf-8") as file:
+              yaml.safe_dump(
+                  values,
+                  file,
+                  sort_keys=False,
+                  default_flow_style=False
+              )
+          PY
+
+
+      # =====================================================
+      # SHOW GITOPS CHANGE
+      # =====================================================
+
+      - name: Show Helm values changes
+        run: git diff -- Ex4_NodeWebsite/helm/values.yaml
+
+
+      # =====================================================
+      # COMMIT DESIRED STATE
+      # =====================================================
+
+      - name: Commit Helm deployment state
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add Ex4_NodeWebsite/helm/values.yaml
+
+          if git diff --cached --quiet; then
+            echo "No Helm values changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Deploy ${{ steps.metadata.outputs.short_sha }} via Argo CD"
+          git push origin main
