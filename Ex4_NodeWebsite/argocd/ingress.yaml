@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+
+metadata:
+  name: argocd-server
+  namespace: argocd
+
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+
+spec:
+  ingressClassName: traefik
+
+  rules:
+    - host: argocd.ipg-devops.online
+
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+
+            backend:
+              service:
+                name: argocd-server
+
+                port:
+                  number: 80
+
+  tls:
+    - hosts:
+        - argocd.ipg-devops.online
+
+      secretName: argocd-ipg-devops-tls
