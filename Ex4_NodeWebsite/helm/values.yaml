@@ -3,7 +3,7 @@ namespace:
   name: devops
 image:
   repository: gip37/node-website
-  tag: 3cff099
+  tag: f2d988a
   pullPolicy: Always
 nodeApp:
   name: node-app
@@ -68,6 +68,6 @@ config:
   appName: node-app
 deploymentMetadata:
   appVersion: 1.6.0
-  gitCommit: 3cff099a98a8d04db33e959bd2e9c16daa028fff
-  gitMessage: Migrate deployment pipeline to Argo CD GitOps
-  deployedAt: '2026-08-08T09:15:21Z'
+  gitCommit: f2d988adb2e401709e4ff7928cfabee86d18721b
+  gitMessage: Enable automatic Argo CD synchronization
+  deployedAt: '2026-08-08T09:30:07Z'
