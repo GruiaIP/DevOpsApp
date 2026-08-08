@@ -1,23 +1,18 @@
 namespace:
   create: false
   name: devops
-
 image:
   repository: gip37/node-website
-  tag: latest
+  tag: 3cff099
   pullPolicy: Always
-
 nodeApp:
   name: node-app
   replicas: 3
   containerPort: 3000
-
   environment:
     nodeEnv: production
     redisUrl: redis://redis-service:6379
-    prometheusUrl: >-
-      http://monitoring-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
-
+    prometheusUrl: http://monitoring-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
   resources:
     requests:
       cpu: 50m
@@ -25,35 +20,29 @@ nodeApp:
     limits:
       cpu: 300m
       memory: 256Mi
-
   probes:
     readiness:
       initialDelaySeconds: 10
       periodSeconds: 10
       timeoutSeconds: 3
       failureThreshold: 3
-
     liveness:
       initialDelaySeconds: 20
       periodSeconds: 20
       timeoutSeconds: 3
       failureThreshold: 3
-
 service:
   name: node-service
   type: ClusterIP
   port: 3000
   targetPort: 3000
-
 redis:
   name: redis
   image:
     repository: redis
     tag: 7-alpine
     pullPolicy: IfNotPresent
-
   port: 6379
-
   resources:
     requests:
       cpu: 25m
@@ -61,30 +50,24 @@ redis:
     limits:
       cpu: 150m
       memory: 192Mi
-
 redisService:
   name: redis-service
   type: ClusterIP
   port: 6379
   targetPort: 6379
-
 ingress:
   enabled: true
   className: traefik
   host: ipg-devops.online
-
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-production
-
   tls:
     enabled: true
     secretName: ipg-devops-tls
-
 config:
   appName: node-app
-  
 deploymentMetadata:
-  appVersion: "1.6.0"
-  gitCommit: "b116add3f15a576937ce832e5a0bbd76a9970c6e"
-  gitMessage: "Preserve existing deployment selectors for Helm adoption"
-  deployedAt: "2026-08-07T16:48:04Z"
+  appVersion: 1.6.0
+  gitCommit: 3cff099a98a8d04db33e959bd2e9c16daa028fff
+  gitMessage: Migrate deployment pipeline to Argo CD GitOps
+  deployedAt: '2026-08-08T09:15:21Z'
