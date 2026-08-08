@@ -3,7 +3,7 @@ namespace:
   name: devops
 image:
   repository: gip37/node-website
-  tag: f2d988a
+  tag: 53d5728
   pullPolicy: Always
 nodeApp:
   name: node-app
@@ -68,6 +68,6 @@ config:
   appName: node-app
 deploymentMetadata:
   appVersion: 1.6.0
-  gitCommit: f2d988adb2e401709e4ff7928cfabee86d18721b
-  gitMessage: Enable automatic Argo CD synchronization
-  deployedAt: '2026-08-08T09:30:07Z'
+  gitCommit: 53d5728f06f144c516b520f6a7340692798624fa
+  gitMessage: Update homepage with Helm and Argo CD
+  deployedAt: '2026-08-08T20:14:53Z'
