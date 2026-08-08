@@ -85,6 +85,6 @@ config:
   
 deploymentMetadata:
   appVersion: "1.6.0"
-  gitCommit: "local"
-  gitMessage: "Local development"
-  deployedAt: ""
+  gitCommit: "b116add3f15a576937ce832e5a0bbd76a9970c6e"
+  gitMessage: "Preserve existing deployment selectors for Helm adoption"
+  deployedAt: "2026-08-07T16:48:04Z"
