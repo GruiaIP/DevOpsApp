@@ -3,7 +3,7 @@ namespace:
   name: devops
 image:
   repository: gip37/node-website
-  tag: 4a51157
+  tag: 62903d2
   pullPolicy: Always
 nodeApp:
   name: node-app
@@ -68,6 +68,6 @@ config:
   appName: node-app
 deploymentMetadata:
   appVersion: 1.6.0
-  gitCommit: 4a5115754e1cd2f1dfe6b82ba61f41ed65408563
-  gitMessage: Update project page with Helm and Argo CD GitOps
-  deployedAt: '2026-08-09T07:39:59Z'
+  gitCommit: 62903d2bdfb149aeeb91b38c4b0a5ceff3d75f74
+  gitMessage: Update project page with Helm and Argo CD GitOps 2
+  deployedAt: '2026-08-09T07:57:26Z'
