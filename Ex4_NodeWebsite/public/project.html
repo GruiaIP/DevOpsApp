@@ -118,235 +118,232 @@
         <section class="card project-card">
 
 
-            <!-- ================================================= -->
-            <!-- ARCHITECTURE -->
-            <!-- ================================================= -->
+<!-- ================================================= -->
+<!-- ARCHITECTURE -->
+<!-- ================================================= -->
 
-            <section class="project-intro-section">
+<section class="project-intro-section">
 
-                <div class="project-section-heading">
+    <div class="project-section-heading">
 
-                    <div>
+        <div>
+            <span class="project-section-eyebrow">
+                Platform Design
+            </span>
 
-                        <span class="project-section-eyebrow">
-                            Platform Design
-                        </span>
+            <h2>🏗 Cloud-Native GitOps Architecture</h2>
+        </div>
 
-                        <h2>🏗 Cloud-Native Architecture</h2>
+        <span class="project-section-badge implemented-badge">
+            Live on AWS
+        </span>
 
-                    </div>
+    </div>
 
-                    <span
-                        class="project-section-badge implemented-badge"
-                    >
-                        Live on AWS
-                    </span>
+    <p class="project-section-description">
+        The platform evolved from direct server deployments into a
+        GitOps-driven Kubernetes architecture. GitHub Actions now handles
+        Continuous Integration, while Argo CD continuously reconciles the
+        Kubernetes cluster with the desired state stored in Git.
+    </p>
 
-                </div>
+    <div class="architecture-flow">
 
-                <p class="project-section-description">
-                    This platform demonstrates the complete lifecycle of
-                    a cloud-native application, from local development
-                    and source control to automated container builds,
-                    Kubernetes deployment, secure public access, shared
-                    application state, and live observability.
+        <article class="architecture-node">
+
+            <span class="architecture-icon">💻</span>
+
+            <div>
+                <span class="architecture-label">
+                    Development
+                </span>
+
+                <h3>Local Workstation</h3>
+
+                <p>
+                    Application code, Docker resources, Helm charts,
+                    Kubernetes configuration, Terraform, and frontend
+                    changes are developed and validated locally.
                 </p>
+            </div>
 
-                <div class="architecture-flow">
+        </article>
 
-                    <article
-                        class="architecture-node architecture-source"
-                    >
+        <div class="architecture-arrow">→</div>
 
-                        <span class="architecture-icon">
-                            💻
-                        </span>
+        <article class="architecture-node">
 
-                        <div>
+            <span class="architecture-icon">💻</span>
 
-                            <span class="architecture-label">
-                                Development
-                            </span>
+            <div>
+                <span class="architecture-label">
+                    Source Control
+                </span>
 
-                            <h3>Local Workstation</h3>
+                <h3>GitHub</h3>
 
-                            <p>
-                                Application code, Docker resources,
-                                Kubernetes manifests, Terraform, and
-                                frontend changes are developed and tested
-                                locally before being committed.
-                            </p>
+                <p>
+                    Git stores the application code, Helm desired state,
+                    infrastructure configuration, and GitOps definitions.
+                </p>
+            </div>
 
-                        </div>
+        </article>
 
-                    </article>
+        <div class="architecture-arrow">→</div>
 
-                    <div
-                        class="architecture-arrow"
-                        aria-hidden="true"
-                    >
-                        →
-                    </div>
+        <article class="architecture-node">
 
-                    <article
-                        class="architecture-node architecture-git"
-                    >
+            <span class="architecture-icon">🔄</span>
 
-                        <span class="architecture-icon">
-                            💻
-                        </span>
+            <div>
+                <span class="architecture-label">
+                    Continuous Integration
+                </span>
 
-                        <div>
+                <h3>GitHub Actions</h3>
 
-                            <span class="architecture-label">
-                                Source Control
-                            </span>
+                <p>
+                    CI builds the Docker image, performs Trivy security
+                    scanning, pushes immutable Git-SHA images to Docker
+                    Hub, and updates Helm values in Git.
+                </p>
+            </div>
 
-                            <h3>GitHub Repository</h3>
+        </article>
 
-                            <p>
-                                Every application and infrastructure
-                                change is version-controlled in the
-                                DevOpsApp GitHub repository.
-                            </p>
+        <article class="architecture-node">
 
-                        </div>
+            <span class="architecture-icon">🐳</span>
 
-                    </article>
+            <div>
+                <span class="architecture-label">
+                    Image Registry
+                </span>
 
-                    <div
-                        class="architecture-arrow"
-                        aria-hidden="true"
-                    >
-                        →
-                    </div>
+                <h3>Docker Hub</h3>
 
-                    <article
-                        class="architecture-node architecture-cicd"
-                    >
+                <p>
+                    Stores versioned application images using immutable
+                    Git commit tags, providing direct traceability from
+                    source commit to running container.
+                </p>
+            </div>
 
-                        <span class="architecture-icon">
-                            🔄
-                        </span>
+        </article>
 
-                        <div>
+        <div class="architecture-arrow">→</div>
 
-                            <span class="architecture-label">
-                                Automation
-                            </span>
+        <article class="architecture-node">
 
-                            <h3>GitHub Actions</h3>
+            <span class="architecture-icon">🔁</span>
 
-                            <p>
-                                The CI/CD pipeline builds the Docker
-                                image, performs Trivy vulnerability
-                                scanning, pushes the image to Docker Hub,
-                                and deploys the new version.
-                            </p>
+            <div>
+                <span class="architecture-label">
+                    Continuous Delivery
+                </span>
 
-                        </div>
+                <h3>Argo CD</h3>
 
-                    </article>
+                <p>
+                    Argo CD watches the Git repository, detects drift,
+                    renders the Helm chart, and automatically reconciles
+                    Kubernetes with the desired Git state.
+                </p>
+            </div>
 
-                    <article
-                        class="architecture-node architecture-cloud"
-                    >
+        </article>
 
-                        <span class="architecture-icon">
-                            ☁️
-                        </span>
+        <div class="architecture-arrow">→</div>
 
-                        <div>
+        <article class="architecture-node">
 
-                            <span class="architecture-label">
-                                Infrastructure
-                            </span>
+            <span class="architecture-icon">⎈</span>
 
-                            <h3>AWS EC2 + Terraform</h3>
+            <div>
+                <span class="architecture-label">
+                    Application Packaging
+                </span>
 
-                            <p>
-                                Terraform provisions the Kubernetes
-                                worker node and AWS networking resources.
-                                The control plane and worker form a
-                                two-node K3s cluster.
-                            </p>
+                <h3>Helm</h3>
 
-                        </div>
+                <p>
+                    Helm templates define reusable Kubernetes resources
+                    while values.yaml centralizes image tags, replica
+                    counts, networking, resource limits, and deployment
+                    metadata.
+                </p>
+            </div>
 
-                    </article>
+        </article>
 
-                    <div
-                        class="architecture-arrow"
-                        aria-hidden="true"
-                    >
-                        →
-                    </div>
+        <article class="architecture-node">
 
-                    <article
-                        class="architecture-node architecture-kubernetes"
-                    >
+            <span class="architecture-icon">☁️</span>
 
-                        <span class="architecture-icon">
-                            ☸
-                        </span>
+            <div>
+                <span class="architecture-label">
+                    Infrastructure
+                </span>
 
-                        <div>
+                <h3>AWS EC2 + Terraform</h3>
 
-                            <span class="architecture-label">
-                                Orchestration
-                            </span>
+                <p>
+                    Terraform provisions the Kubernetes worker node in
+                    AWS inside the same VPC as the control-plane EC2
+                    instance.
+                </p>
+            </div>
 
-                            <h3>Kubernetes K3s</h3>
+        </article>
 
-                            <p>
-                                Kubernetes manages application replicas,
-                                Redis, Services, ConfigMaps, rolling
-                                updates, self-healing, and workload
-                                distribution across both nodes.
-                            </p>
+        <div class="architecture-arrow">→</div>
 
-                        </div>
+        <article class="architecture-node">
 
-                    </article>
+            <span class="architecture-icon">☸</span>
 
-                    <div
-                        class="architecture-arrow"
-                        aria-hidden="true"
-                    >
-                        →
-                    </div>
+            <div>
+                <span class="architecture-label">
+                    Runtime
+                </span>
 
-                    <article
-                        class="architecture-node architecture-public"
-                    >
+                <h3>K3s Kubernetes</h3>
 
-                        <span class="architecture-icon">
-                            🌐
-                        </span>
+                <p>
+                    The two-node K3s cluster runs the Node.js replicas,
+                    Redis, Traefik, Prometheus, Grafana, cert-manager,
+                    Argo CD, and supporting workloads.
+                </p>
+            </div>
 
-                        <div>
+        </article>
 
-                            <span class="architecture-label">
-                                Public Access
-                            </span>
+        <div class="architecture-arrow">→</div>
 
-                            <h3>Traefik + HTTPS</h3>
+        <article class="architecture-node">
 
-                            <p>
-                                Traefik routes custom-domain traffic to
-                                the application. cert-manager and
-                                Let's Encrypt provide automated TLS
-                                certificate management.
-                            </p>
+            <span class="architecture-icon">🌐</span>
 
-                        </div>
+            <div>
+                <span class="architecture-label">
+                    Public Access
+                </span>
 
-                    </article>
+                <h3>Traefik + HTTPS</h3>
 
-                </div>
+                <p>
+                    Traefik exposes the application, Grafana, and Argo CD
+                    through custom HTTPS endpoints secured using
+                    cert-manager and Let's Encrypt.
+                </p>
+            </div>
 
-            </section>
+        </article>
 
+    </div>
+
+</section>
 
             <!-- ================================================= -->
             <!-- RUNTIME ARCHITECTURE -->
@@ -924,233 +921,6 @@
                     Actions to Argo CD. Git became the source of truth,
                     with automated sync, self-healing, pruning, and
                     immutable Git-SHA container images.
-                </p>
-            </div>
-
-        </article>
-
-    </div>
-
-</section>
-
-<!-- ================================================= -->
-<!-- ARCHITECTURE -->
-<!-- ================================================= -->
-
-<section class="project-intro-section">
-
-    <div class="project-section-heading">
-
-        <div>
-            <span class="project-section-eyebrow">
-                Platform Design
-            </span>
-
-            <h2>🏗 Cloud-Native GitOps Architecture</h2>
-        </div>
-
-        <span class="project-section-badge implemented-badge">
-            Live on AWS
-        </span>
-
-    </div>
-
-    <p class="project-section-description">
-        The platform evolved from direct server deployments into a
-        GitOps-driven Kubernetes architecture. GitHub Actions now handles
-        Continuous Integration, while Argo CD continuously reconciles the
-        Kubernetes cluster with the desired state stored in Git.
-    </p>
-
-    <div class="architecture-flow">
-
-        <article class="architecture-node">
-
-            <span class="architecture-icon">💻</span>
-
-            <div>
-                <span class="architecture-label">
-                    Development
-                </span>
-
-                <h3>Local Workstation</h3>
-
-                <p>
-                    Application code, Docker resources, Helm charts,
-                    Kubernetes configuration, Terraform, and frontend
-                    changes are developed and validated locally.
-                </p>
-            </div>
-
-        </article>
-
-        <div class="architecture-arrow">→</div>
-
-        <article class="architecture-node">
-
-            <span class="architecture-icon">💻</span>
-
-            <div>
-                <span class="architecture-label">
-                    Source Control
-                </span>
-
-                <h3>GitHub</h3>
-
-                <p>
-                    Git stores the application code, Helm desired state,
-                    infrastructure configuration, and GitOps definitions.
-                </p>
-            </div>
-
-        </article>
-
-        <div class="architecture-arrow">→</div>
-
-        <article class="architecture-node">
-
-            <span class="architecture-icon">🔄</span>
-
-            <div>
-                <span class="architecture-label">
-                    Continuous Integration
-                </span>
-
-                <h3>GitHub Actions</h3>
-
-                <p>
-                    CI builds the Docker image, performs Trivy security
-                    scanning, pushes immutable Git-SHA images to Docker
-                    Hub, and updates Helm values in Git.
-                </p>
-            </div>
-
-        </article>
-
-        <article class="architecture-node">
-
-            <span class="architecture-icon">🐳</span>
-
-            <div>
-                <span class="architecture-label">
-                    Image Registry
-                </span>
-
-                <h3>Docker Hub</h3>
-
-                <p>
-                    Stores versioned application images using immutable
-                    Git commit tags, providing direct traceability from
-                    source commit to running container.
-                </p>
-            </div>
-
-        </article>
-
-        <div class="architecture-arrow">→</div>
-
-        <article class="architecture-node">
-
-            <span class="architecture-icon">🔁</span>
-
-            <div>
-                <span class="architecture-label">
-                    Continuous Delivery
-                </span>
-
-                <h3>Argo CD</h3>
-
-                <p>
-                    Argo CD watches the Git repository, detects drift,
-                    renders the Helm chart, and automatically reconciles
-                    Kubernetes with the desired Git state.
-                </p>
-            </div>
-
-        </article>
-
-        <div class="architecture-arrow">→</div>
-
-        <article class="architecture-node">
-
-            <span class="architecture-icon">⎈</span>
-
-            <div>
-                <span class="architecture-label">
-                    Application Packaging
-                </span>
-
-                <h3>Helm</h3>
-
-                <p>
-                    Helm templates define reusable Kubernetes resources
-                    while values.yaml centralizes image tags, replica
-                    counts, networking, resource limits, and deployment
-                    metadata.
-                </p>
-            </div>
-
-        </article>
-
-        <article class="architecture-node">
-
-            <span class="architecture-icon">☁️</span>
-
-            <div>
-                <span class="architecture-label">
-                    Infrastructure
-                </span>
-
-                <h3>AWS EC2 + Terraform</h3>
-
-                <p>
-                    Terraform provisions the Kubernetes worker node in
-                    AWS inside the same VPC as the control-plane EC2
-                    instance.
-                </p>
-            </div>
-
-        </article>
-
-        <div class="architecture-arrow">→</div>
-
-        <article class="architecture-node">
-
-            <span class="architecture-icon">☸</span>
-
-            <div>
-                <span class="architecture-label">
-                    Runtime
-                </span>
-
-                <h3>K3s Kubernetes</h3>
-
-                <p>
-                    The two-node K3s cluster runs the Node.js replicas,
-                    Redis, Traefik, Prometheus, Grafana, cert-manager,
-                    Argo CD, and supporting workloads.
-                </p>
-            </div>
-
-        </article>
-
-        <div class="architecture-arrow">→</div>
-
-        <article class="architecture-node">
-
-            <span class="architecture-icon">🌐</span>
-
-            <div>
-                <span class="architecture-label">
-                    Public Access
-                </span>
-
-                <h3>Traefik + HTTPS</h3>
-
-                <p>
-                    Traefik exposes the application, Grafana, and Argo CD
-                    through custom HTTPS endpoints secured using
-                    cert-manager and Let's Encrypt.
                 </p>
             </div>
 
